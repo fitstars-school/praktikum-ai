@@ -34,7 +34,7 @@
   --radius-lg:26px;
   --shadow:0 18px 44px -26px rgba(120,20,90,.24);
   --maxw:1120px;
-  --h1:clamp(38px,6vw,66px);
+  --h1:clamp(38px,5vw,56px);
   --h2:clamp(27px,3.4vw,40px);
   --sub:20px;
   --text:17px;
@@ -54,6 +54,7 @@ h1{font-size:var(--h1)}
 h2{font-size:var(--h2)}
 .accent{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .nw{white-space:nowrap}
+.keep{white-space:nowrap}
 b,strong{font-weight:700;color:var(--ink)}
 a{color:inherit}
 
@@ -119,7 +120,7 @@ a{color:inherit}
     radial-gradient(1100px 520px at 88% -10%, #FCE1EF 0%, rgba(252,225,239,0) 60%),
     radial-gradient(880px 620px at 0% 2%, #EEE6FF 0%, rgba(238,230,255,0) 55%),
     linear-gradient(180deg,#FFF9FC 0%, #FFFFFF 92%);}
-.hero-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:48px;align-items:center}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:56px;align-items:center}
 .hero .label{margin-bottom:18px;display:block}
 .hero h1{margin-bottom:22px}
 .hero-lead{max-width:540px;margin-bottom:28px;color:var(--ink)}
@@ -216,7 +217,7 @@ a{color:inherit}
 
 /* ---------- section rhythm ---------- */
 .sec{padding:92px 0}
-.sec-head{max-width:860px;margin-bottom:44px}
+.sec-head{max-width:760px;margin:0 auto 44px;text-align:center}
 .sec-head p{text-wrap:balance}
 .sec-head .label{margin-bottom:14px;display:block}
 .sec-head h2{margin-bottom:14px}
@@ -263,12 +264,13 @@ a{color:inherit}
 .tcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:30px;
   display:flex;flex-direction:column;position:relative;box-shadow:var(--shadow)}
 .tcard.vip{border:2px solid var(--pink)}
-.t-plan{font-family:'Unbounded',sans-serif;font-weight:700;font-size:21px}
+.t-plan{font-family:'Unbounded',sans-serif;font-weight:700;font-size:21px;min-height:54px}
 .tcard.vip .t-plan{max-width:calc(100% - 120px)}
 .t-plan .t-plan-sub{display:block;font-family:'Manrope',sans-serif;font-weight:700;font-size:14px;color:var(--pink);margin-top:4px;letter-spacing:0}
 .ribbon{position:absolute;top:24px;right:24px;background:var(--grad);color:#fff;font-weight:700;font-size:12px;
   letter-spacing:.05em;padding:7px 13px;border-radius:999px}
-.price{display:flex;align-items:baseline;gap:11px;margin:14px 0 22px}
+.price{display:flex;align-items:baseline;gap:11px;flex-wrap:wrap;margin:14px 0 22px}
+.price .now,.price .old{white-space:nowrap}
 .price .now{font-family:'Unbounded',sans-serif;font-size:42px;font-weight:700;line-height:1}
 .price .old{font-size:19px;opacity:.42;text-decoration:line-through;font-weight:600}
 .feats{list-style:none;display:flex;flex-direction:column;gap:13px;margin-bottom:24px;flex:1}
@@ -303,7 +305,7 @@ a{color:inherit}
 .manifest blockquote{font-family:'Unbounded',sans-serif;font-weight:800;font-size:var(--h2);letter-spacing:-.02em;line-height:1.09}
 
 /* ---------- сноска «сайт собран на ИИ» ---------- */
-.meta-note{max-width:960px;margin:0 auto;padding:56px 24px}
+.meta-note{max-width:var(--maxw);margin:0 auto;padding:56px 24px}
 .mn-card{display:flex;align-items:center;gap:22px;padding:24px 28px;border-radius:var(--radius-lg);
   background:linear-gradient(100deg,#FFF1F8,#F2EAFE);border:1px solid #F1D9EC;box-shadow:var(--shadow);
   position:relative;overflow:hidden}
@@ -402,10 +404,14 @@ footer{background:var(--dark);color:#CFC7D7;padding:56px 0 34px}
   display:flex;align-items:center;justify-content:center;font-size:14px}
 .gift-plate{margin-top:22px;padding:18px 20px;border-radius:16px;
   background:linear-gradient(100deg,#FDEBF4,#F6EAFB);border:1px solid #F3D3E8;max-width:540px}
+.gift-plate .gp-item{display:flex;gap:10px;align-items:flex-start}
+.gift-plate .gp-item + .gp-item{margin-top:10px;padding-top:10px;border-top:1px solid #F0D2E4}
+.gift-plate .gp-n{flex-shrink:0;font-weight:700;color:var(--pink)}
 .gift-plate .gp-lab{font-weight:700;font-size:var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--pink);display:block;margin-bottom:6px}
 /* ===== БЛОК 2: «Знакомо?» — боль → решение ===== */
 .pains{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.pain{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:26px 24px;box-shadow:var(--shadow)}
+.pains{grid-template-rows:auto auto}
+.pain{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:26px 24px;box-shadow:var(--shadow);display:grid;grid-row:span 2;grid-template-rows:subgrid;row-gap:0}
 .pain .p-q{display:flex;gap:11px;align-items:flex-start;font-weight:700;font-size:var(--sub);line-height:1.3;margin-bottom:14px}
 .pain .p-q .mk{flex-shrink:0;color:#C0116E}
 .pain .p-a{display:flex;gap:11px;align-items:flex-start;padding-top:14px;border-top:1px solid var(--line)}
@@ -433,6 +439,16 @@ footer{background:var(--dark);color:#CFC7D7;padding:56px 0 34px}
 @media(max-width:900px){
   .pains,.prog{grid-template-columns:1fr}
   .ba{grid-template-columns:1fr}
+  .ctaband{padding:28px 24px}
+  .ctaband > div,.ctaband .side{width:100%}
+  .tcard{padding:26px 22px}
+  .tcard.vip .t-plan{max-width:none}
+  .t-plan{min-height:0}
+  .ribbon{position:static;align-self:flex-start;margin-bottom:14px}
+  .price .now{font-size:36px}
+  .sp-body{text-align:left}
+  .sp-body .label,.sp-name{text-align:center}
+  .sp-role{text-align:center}
 }
 </style>
 
@@ -466,7 +482,7 @@ footer{background:var(--dark);color:#CFC7D7;padding:56px 0 34px}
   <div class="wrap">
     <div class="hero-grid">
       <div>
-        <span class="label">Живой практический интенсив · 24 сентября в 15:00 мск</span>
+        <span class="label">Живой практический интенсив · <span class="keep">24 сентября</span> <span class="keep">в 15:00 мск</span></span>
         <h1>Практикум<br><span class="accent"><span class="nw">«ИИ-помощник</span><br><span class="nw">в твоём деле»</span></span></h1>
         <p class="hero-lead hero-promise">Как за 3 минуты надиктовать текст голосом и получить живой пост без «пластикового» языка нейросетей.</p>
         <p class="hero-lead">Пошаговая практика для абсолютных новичков – без сложного кода, языковых барьеров и проблем с технической доступностью сервисов.</p>
@@ -475,8 +491,9 @@ footer{background:var(--dark);color:#CFC7D7;padding:56px 0 34px}
           <div class="hb"><span class="hb-ic">👤</span><span><b>Спикер:</b> Светлана Цыро – методолог, эксперт по внедрению ИИ</span></div>
         </div>
         <div class="gift-plate">
-          <span class="gp-lab">🎁 Бонус за регистрацию</span>
-          <span>Пошаговое интерактивное руководство по быстрой настройке сетевого соединения и беспрепятственному входу в веб-интерфейсы нейросетей.</span>
+          <span class="gp-lab">🎁 Бонусы за регистрацию</span>
+          <div class="gp-item"><span class="gp-n">1</span><span>Пошаговое интерактивное руководство по быстрой настройке сетевого соединения и беспрепятственному входу в веб-интерфейсы нейросетей.</span></div>
+          <div class="gp-item"><span class="gp-n">2</span><span><b>Урок «Карта и 4 уровня: где нейросети могут стать твоим помощником».</b> Внутри – бонус: как поставить нейросети регулярную задачу.</span></div>
         </div>
         <div class="hero-cta">
           <span class="date-pill"><span class="dot"></span><b>24 сентября</b> · 15:00 мск</span>
@@ -500,7 +517,7 @@ footer{background:var(--dark);color:#CFC7D7;padding:56px 0 34px}
     </div>
     <div class="pains">
       <div class="pain reveal">
-        <div class="p-q"><span class="mk">❌</span><span>«Пробовал ChatGPT, но он пишет сухие, "роботизированные" тексты»</span></div>
+        <div class="p-q"><span class="mk">❌</span><span>«Пробовал ChatGPT, но он пишет сухие, „роботизированные“ тексты»</span></div>
         <div class="p-a"><span class="mk">👉</span><span><b>Решение:</b> покажем, как за 1 минуту наговорить свои мысли голосом и научить ИИ писать в твоём личном авторском стиле.</span></div>
       </div>
       <div class="pain reveal">
@@ -528,7 +545,7 @@ footer{background:var(--dark);color:#CFC7D7;padding:56px 0 34px}
         <h2>Готов начать?</h2>
         <p>Мест немного – практикум камерный, с разбором вживую. Выбери формат участия и оставь контакты на следующем шаге.</p>
         <a href="#tariffs" class="btn">Забронировать место <span class="arw">→</span></a>
-        <span class="fine">После регистрации получишь пошаговое руководство по быстрой регистрации в ИИ</span>
+        <span class="fine">После регистрации получишь пошаговое руководство по регистрации в ИИ и урок «Карта и 4 уровня»</span>
       </div>
     </div>
   </div>
@@ -539,7 +556,7 @@ footer{background:var(--dark);color:#CFC7D7;padding:56px 0 34px}
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="label">Программа практикума</span>
-      <h2>90 минут живого эфира – <span class="accent">три практики подряд</span></h2>
+      <h2>90 минут живого эфира&nbsp;– <span class="accent">три практики подряд</span></h2>
       <p>Забудь про сухую теорию. Всё, что разбираем, ты делаешь вместе со спикером прямо в эфире.</p>
     </div>
     <div class="prog">
@@ -601,7 +618,7 @@ footer{background:var(--dark);color:#CFC7D7;padding:56px 0 34px}
       <span class="label">Кто ведёт</span>
       <div class="sp-name">Светлана Цыро</div>
       <div class="sp-role">Методолог в проектах FitStars («Блогер с нуля», «Менеджер по работе с блогерами»), Седы Каспаровой и других экспертов и онлайн-школ</div>
-      <p>Обычный гуманитарий, не программист и не технический специалист. За 1,5 года выстроила систему, где ИИ собирает конспекты, пошаговые руководства и материалы курсов: рутина идёт <b>в 4–5 раз быстрее</b>.</p>
+      <p>Обычный гуманитарий, не программист и не технический специалист. За 1,5 года выстроила систему, где ИИ собирает конспекты, пошаговые руководства и материалы курсов: рутина идёт <b>в&nbsp;<span class="keep">4–5</span>&nbsp;раз быстрее</b>.</p>
       <p>Но главное не скорость. С ИИ я <b>расширила экспертность и стала востребованнее</b>: больше <b>10 курсов</b>, две платформы для экспертов, интерактивная книга и продукт «ИИ-методолог» – новые проекты и новый доход.</p>
       <div class="sp-accent">ИИ – не новая профессия, а инструмент, который <b>поднимает чек там, где ты уже специалист</b></div>
     </div>
@@ -623,6 +640,7 @@ footer{background:var(--dark);color:#CFC7D7;padding:56px 0 34px}
         <ul class="feats">
           <li><span class="mk yes">✓</span><span><b>Прямой эфир 24 сентября в 15:00 мск</b> + запись на 24 часа</span></li>
           <li><span class="mk gift">🎁</span><span>Пошаговое руководство по регистрации в ИИ</span></li>
+          <li><span class="mk gift">🎁</span><span><b>Урок «Карта и 4 уровня»</b> – где нейросети могут стать твоим помощником, внутри бонус: как поставить нейросети регулярную задачу</span></li>
           <li class="off"><span class="mk">–</span><span>Подробный конспект с готовыми запросами для ИИ – нет</span></li>
           <li class="off"><span class="mk">–</span><span>Редактор и шаблоны каруселей – нет</span></li>
           <li class="off"><span class="mk">–</span><span>Секретные бонусы – нет</span></li>
@@ -637,6 +655,7 @@ footer{background:var(--dark);color:#CFC7D7;padding:56px 0 34px}
         <ul class="feats">
           <li><span class="mk yes">✓</span><span><b>Прямой эфир 24 сентября в 15:00 мск</b> + запись на 14 дней</span></li>
           <li><span class="mk gift">🎁</span><span>Пошаговое руководство по регистрации в ИИ</span></li>
+          <li><span class="mk gift">🎁</span><span><b>Урок «Карта и 4 уровня»</b> – где нейросети могут стать твоим помощником, внутри бонус: как поставить нейросети регулярную задачу</span></li>
           <li><span class="mk gift">🎁</span><span><b>Подробный конспект с готовыми запросами для ИИ</b> – скопировал, вставил</span></li>
           <li><span class="mk gift">🎁</span><span><b>Редактор и шаблоны каруселей</b> в стиле практикума</span></li>
           <li><span class="mk gift">🎁</span><span><b>Секретные бонусы</b></span></li>
