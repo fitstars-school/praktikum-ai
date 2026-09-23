@@ -630,6 +630,10 @@ template.oldshot{display:none}
 .nowrap{white-space:nowrap}
 .cta-big{align-self:flex-start;margin-top:7cqw;font-size:4.6cqw;padding:3.2cqw 8.5cqw}
 .cta-hint{margin-top:auto;padding-top:4cqw;font-size:2.9cqw;font-weight:600;opacity:.85}
+/* градиентный текст: без тени сквозь буквы, на переносе каждая строка со своим градиентом */
+.accent{-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.s-aurora h1 .accent{text-shadow:none;filter:drop-shadow(0 .3cqw 1.6cqw rgba(8,4,12,.55))}
+.s-dark .accent,.s-grad .accent{text-shadow:none}
 </style>
 </head>
 
