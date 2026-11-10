@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow, noarchive">
+<meta name="yandex" content="noindex, nofollow, noarchive">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Первый мини-продукт · Усилитель практикума</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --magenta:#E6198C; --magenta-d:#C0116E; --ink:#211829; --dark:#1B1420;
+    --wash:#FBF4F8; --line:#ECE1EC; --muted:#6b5c69;
+    --grad:linear-gradient(100deg,#E6198C 0%,#B23AE0 52%,#FF6B57 100%);
+    --radius:20px; --radius-lg:26px;
+    --shadow:0 18px 44px -26px rgba(120,20,90,.24);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Manrope',sans-serif;color:var(--ink);background:var(--wash);line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 22px}
+
+  /* ---- роли типографики: Р1 заголовок, Р2 подзаголовок, Р3 текст 17px, Р4 метка ---- */
+  h1{font-family:'Unbounded',sans-serif;font-weight:800;font-size:clamp(30px,5.2vw,50px);line-height:1.06;text-wrap:balance;margin:12px 0 16px}
+  h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  h2{font-family:'Unbounded',sans-serif;font-weight:700;font-size:clamp(24px,3.2vw,34px);line-height:1.12;text-wrap:balance;margin-bottom:20px}
+  h3{font-family:'Manrope',sans-serif;font-weight:700;font-size:20px;line-height:1.25;text-wrap:balance}
+  p,li,td,th,summary,label{font-size:17.5px;text-wrap:pretty}
+  section > .wrap > p{max-width:860px}
+  p+p{margin-top:16px}
+  .kick{font-family:'Manrope',sans-serif;font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--magenta);margin-bottom:12px}
+  .small{font-size:13px;color:#9a8d98}
+  b,strong{font-weight:700}
+  a{color:var(--magenta);text-decoration:none;border-bottom:1px solid rgba(230,25,140,.3)}
+  a:hover{color:var(--magenta-d)}
+
+  /* ---- шапка ---- */
+  .top{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:30}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;padding-top:12px;padding-bottom:12px}
+  .back{display:inline-flex;align-items:center;gap:9px;font-size:16px;font-weight:700;color:#fff;background:var(--grad);background-size:200% 100%;border:none;border-bottom:none;border-radius:999px;padding:12px 22px;text-decoration:none;transition:background-position .35s,transform .15s,box-shadow .2s}
+  .back,.back:hover,.back:visited{color:#fff}
+  .back:hover{background-position:100% 0;transform:translateY(-1px);box-shadow:0 12px 26px -14px rgba(230,25,140,.6)}
+  .pill{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 15px;font-size:13px;font-weight:700}
+  .pill .dot{width:8px;height:8px;border-radius:50%;background:var(--magenta)}
+
+  header.hero{padding:56px 0 48px}
+  .lead{font-size:20px;line-height:1.5;color:#4a3d48;max-width:860px;text-wrap:pretty}
+
+  section{padding:46px 0}
+  section + section{padding-top:34px}
+  .p:last-of-type{margin-bottom:8px}
+  .sec-dark{background:var(--dark);color:#fff;position:relative;overflow:hidden;margin:20px 0}
+  .sec-dark::before{content:"";position:absolute;top:-140px;right:-100px;width:420px;height:420px;background:radial-gradient(circle,rgba(230,25,140,.30),transparent 70%);pointer-events:none}
+  .sec-dark h2,.sec-dark p,.sec-dark li,.sec-dark h3{color:#fff}
+  .sec-dark .kick{color:#FF8FC6}
+  .sec-white{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+
+  .card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow)}
+  .soft{background:linear-gradient(100deg,#FFF1F8,#F2EAFE);border:1px solid #F1D9EC;border-radius:var(--radius);padding:26px 28px}
+
+  /* ---- конвейер ---- */
+  .flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:26px}
+  .flow a{display:block;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 15px;color:var(--ink);box-shadow:var(--shadow)}
+  .flow a:hover{transform:translateY(-2px);border-color:#F1D9EC}
+  .flow .n{font-family:'Unbounded',sans-serif;font-weight:700;font-size:13px;color:var(--magenta)}
+  .flow .t{font-weight:700;font-size:16px;margin-top:5px}
+  .flow .s{font-size:13px;color:var(--muted);margin-top:3px}
+
+  /* ---- карточка промпта ---- */
+  .p{background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);padding:34px 34px 32px;box-shadow:var(--shadow);margin-bottom:30px;scroll-margin-top:80px}
+  .p-head{display:flex;gap:15px;align-items:flex-start;margin-bottom:18px}
+  .p-num{flex:0 0 auto;width:42px;height:42px;border-radius:13px;background:var(--grad);color:#fff;font-family:'Unbounded',sans-serif;font-weight:700;font-size:17px;display:flex;align-items:center;justify-content:center}
+  .p-out{margin-top:6px;color:var(--muted)}
+  .meta{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:18px 0;margin:22px 0}
+  .meta p+p{margin-top:10px}
+  .steps{counter-reset:s;margin:22px 0}
+  .steps li{list-style:none;position:relative;padding-left:36px;margin-bottom:13px;color:#4a3d48}
+  .steps li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:1px;width:23px;height:23px;border-radius:8px;background:#FCE6F1;border:1px solid #F6CFE2;color:var(--magenta);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+
+  .promptbox{position:relative;background:#171B22;border:1px solid #2A303B;border-radius:18px;padding:52px 26px 26px;margin-top:20px;box-shadow:0 18px 40px -28px rgba(0,0,0,.75)}
+  .promptbox::before{content:"ПРОМПТ · КОПИРУЕТСЯ ЦЕЛИКОМ";position:absolute;top:18px;left:26px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.14em;color:#FF8FC6}
+  .promptbox pre{white-space:pre-wrap;word-wrap:break-word;font-family:'JetBrains Mono',monospace;font-size:14px;line-height:1.75;color:#DDE3EC}
+  .promptbox .tok{background:rgba(230,25,140,.22);border:1px solid rgba(255,143,198,.45);border-radius:6px;padding:1px 6px;font-weight:600;color:#FFC2E1}
+  .copyicon{position:absolute;top:13px;right:13px;width:40px;height:40px;border-radius:12px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s;padding:0}
+  .copyicon:hover{background:rgba(255,255,255,.12);border-color:rgba(255,143,198,.5);transform:translateY(-1px)}
+  .copyicon svg{width:19px;height:19px;stroke:#FF8FC6;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .copyicon.done{background:rgba(31,162,78,.18);border-color:rgba(105,222,150,.5)}
+  .copyicon.done svg{stroke:#69DE96}
+  .subblock{margin-top:28px;padding-top:24px;border-top:1px solid var(--line)}
+  .subblock .sublabel{font-weight:700;font-size:17.5px;margin-bottom:12px}
+  .hint{font-size:13px;color:#9a8d98;margin-top:10px}
+
+  .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+  .btn{font-family:'Manrope',sans-serif;font-weight:700;font-size:15px;border:none;border-radius:999px;padding:13px 22px;cursor:pointer;color:#fff;background:var(--grad);background-size:200% 100%;transition:background-position .35s,transform .15s;display:inline-flex;align-items:center;gap:8px;text-decoration:none}
+  .btn:hover{background-position:100% 0;transform:translateY(-1px);box-shadow:0 12px 26px -14px rgba(230,25,140,.6)}
+  .btn:active{transform:scale(.98)}
+  a.btn,a.btn:hover,a.btn:visited{color:#fff;border-bottom:none}
+  a.btn.ghost,a.btn.ghost:hover{color:var(--ink)}
+  .btn.ghost:hover{border-color:#F1D9EC;box-shadow:0 12px 26px -18px rgba(120,20,90,.4)}
+  .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+  .btn.done{background:#EAF7EE;color:#1FA24E;border:1px solid #CDEBD6}
+
+  details{border:1px solid var(--line);border-radius:16px;padding:0;margin-top:16px;background:#fff;overflow:hidden}
+  details summary{cursor:pointer;list-style:none;padding:14px 18px;font-weight:700;font-size:16px;display:flex;align-items:center;gap:10px;background:#fff}
+  details summary::-webkit-details-marker{display:none}
+  details summary::before{content:"+";font-family:'Unbounded',sans-serif;color:var(--magenta);font-size:16px;width:22px;height:22px;border-radius:7px;background:#FCE6F1;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  details[open] summary::before{content:"–"}
+  .det-body{padding:0 22px 22px;color:#4a3d48;font-size:16px}
+  .det-body p+p{margin-top:10px}
+  .det-body .ex{background:var(--wash);border:1px solid var(--line);border-radius:14px;padding:15px;font-size:15px;line-height:1.55;white-space:pre-wrap}
+  .fix{background:var(--wash);border:1px solid var(--line);border-radius:12px;padding:13px 16px;margin-top:12px;font-size:15px}
+  .fix b{color:var(--magenta)}
+
+  .next{margin-top:22px;padding-top:18px;border-top:1px dashed var(--line);font-size:15px;color:var(--muted)}
+  .next a{font-weight:700}
+
+  ul.plain{list-style:none}
+  ul.plain li{position:relative;padding-left:30px;margin-bottom:11px}
+  ul.plain li::before{content:"✓";position:absolute;left:0;top:0;color:#1FA24E;font-weight:700}
+  ul.no li::before{content:"✕";color:var(--magenta)}
+
+  .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:24px}
+
+  footer{background:var(--dark);color:#fff;padding:52px 0;margin-top:24px}
+  footer p{color:#bdb0bd;font-size:15px}
+  footer a{color:#FF8FC6;border:none}
+
+  .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:13px 22px;border-radius:999px;font-weight:700;font-size:15px;opacity:0;pointer-events:none;transition:.3s;z-index:60;box-shadow:0 12px 30px -10px rgba(0,0,0,.5)}
+  .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  .way{display:flex;gap:18px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow);margin-bottom:14px}
+  .way .wn{flex:0 0 auto;width:42px;height:42px;border-radius:13px;background:var(--grad);color:#fff;font-family:'Unbounded',sans-serif;font-weight:700;font-size:17px;display:flex;align-items:center;justify-content:center}
+  .way .wb{flex:1;min-width:0}
+  .way .wd{color:var(--muted);margin-top:7px}
+
+  @media (max-width:560px){
+    html,body{overflow-x:hidden}
+    .wrap{padding:0 16px}
+    h1{word-break:break-word;hyphens:auto}
+    h2{hyphens:auto}
+    .p{padding:24px 18px}
+    .promptbox{padding:46px 16px 20px;border-radius:14px}
+    .promptbox::before{left:16px;top:16px;font-size:10px;letter-spacing:.1em}
+    .promptbox pre{font-size:12.8px;line-height:1.72;overflow-wrap:anywhere}
+    .promptbox .tok{overflow-wrap:anywhere;padding:1px 4px}
+    .copyicon{top:9px;right:9px;width:34px;height:34px}
+    .copyicon svg{width:16px;height:16px}
+    .btn{width:100%;justify-content:center}
+    .back{width:auto;font-size:15px;padding:10px 16px}
+    .det-body{padding:0 16px 18px}
+    .tool,.res,.fix{padding-left:15px;padding-right:15px}
+    .soft{padding:20px 18px}
+    .card{padding:20px 18px}
+    .steps li{padding-left:32px}
+    .withpic{grid-template-columns:1fr}
+    .way{flex-direction:column;gap:12px;padding:20px 18px}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+  /* ---- задача ---- */
+  .tnum{flex:0 0 auto;padding:0 14px;height:34px;border-radius:11px;background:var(--grad);color:#fff;font-weight:700;font-size:14px;display:inline-flex;align-items:center;justify-content:center;white-space:nowrap}
+  .thead{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+  .tmin{font-size:13px;font-weight:700;color:#9a8d98;border:1px solid var(--line);border-radius:999px;padding:5px 12px}
+  .res{background:#EAF7EE;border:1px solid #CDEBD6;border-radius:14px;padding:17px 19px;margin-top:24px;font-size:16px;color:#1c5f36}
+  .res b{color:#14663a}
+  .tool{background:var(--wash);border:1px solid var(--line);border-radius:14px;padding:17px 19px;margin:22px 0;font-size:15.5px;color:#4a3d48}
+  .tool b{color:var(--ink)}
+  .tool a{font-weight:700}
+
+  /* ---- инструкция со скриншотом ---- */
+  .withpic{display:grid;grid-template-columns:1fr minmax(240px,330px);gap:26px;align-items:start;margin-top:6px}
+  .withpic .shot{margin:0}
+  .withpic .shot img{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}
+  .withpic .shot figcaption{font-size:13.5px;color:#9a8d98;margin-top:10px;line-height:1.45}
+  @media (max-width:760px){.withpic{grid-template-columns:1fr;gap:18px}}
+
+  /* ---- раскрывающаяся инструкция-кнопка ---- */
+  .bigdet{border:1px solid #F1D9EC;border-radius:16px;background:#fff;margin-top:20px;overflow:hidden}
+  .bigdet>summary{list-style:none;cursor:pointer;padding:17px 22px;font-weight:700;font-size:16.5px;display:flex;align-items:center;gap:11px;background:linear-gradient(100deg,#FFF1F8,#F2EAFE);color:var(--ink)}
+  .bigdet>summary::-webkit-details-marker{display:none}
+  .bigdet>summary::before{content:"+";font-family:'Unbounded',sans-serif;color:#fff;background:var(--grad);font-size:15px;width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .bigdet[open]>summary::before{content:"–"}
+  .bigdet .det-body{padding:20px 22px 22px}
+  .bigdet .det-body h4{font-weight:700;font-size:16.5px;margin:20px 0 10px}
+  .bigdet .det-body h4:first-child{margin-top:0}
+
+  .shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px;margin-top:16px}
+  .shots figure{margin:0}
+  .shots img{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}
+  .shots figcaption{font-size:13.5px;color:#9a8d98;margin-top:10px;line-height:1.5}
+  .shots figcaption b{color:var(--ink)}
+  .fcard{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:8px}
+  .fcard h3{font-size:19px}
+  .fcard .fd{color:var(--muted);font-size:16px}
+  .fcard .fx{background:var(--wash);border:1px solid var(--line);border-radius:12px;padding:10px 13px;font-size:14px;color:#4a3d48}
+  .fcard .fm{font-size:13px;color:#9a8d98;margin-top:auto}
+  .fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-top:20px}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="wrap">
+    <a class="back" href="../">&larr; Все бонусы</a>
+    <span class="pill"><span class="dot"></span>Бонус 4 из 6</span>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kick">Бонус 4 · следующий шаг после практикума</div>
+    <h1>Первый <span class="g">мини-продукт</span></h1>
+    <p class="lead">На практикуме мы видели, как из обычной экспертизы получается готовый файл, который можно отдать людям. Сегодня предлагаем собрать такой файл твоими руками. 3 задачи: найти проблему, убедиться, что она настоящая, и собрать прототип вместе с нейросетью. Это выходные, а не месяц.</p>
+  </div>
+</header>
+
+<section class="sec-white">
+  <div class="wrap">
+    <div class="kick">Прежде чем начнём</div>
+    <h2>Мини-продукт – это не маленький курс</h2>
+    <p><b>Обычно бывает так:</b> человек решает «сделаю гайд», садится и начинает писать всё, что знает по теме. Через месяц это тихо бросают – получился учебник, сил больше нет, а результата так и не видно. Знакомо – мы сами так делали не раз.</p>
+    <p>Мини-продукт устроен иначе. <b>В нём одна проблема одного человека, решённая за один заход.</b> Не «всё о питании», а «что положить ребёнку в школу, если утром 10 минут». По форме это чаще всего один файл: чек-лист, шаблон, тест, считалка. <b>И чем уже тема, тем легче собрать, объяснить и отдать</b> – а заодно тем понятнее человеку, зачем ему это брать.</p>
+  
+    <div class="tool"><b>Нейросеть бери любую.</b> Мы для простоты пишем «ChatGPT» – это самый короткий путь. Но промпты здесь работают везде: и в зарубежных Claude и Gemini, и в российских GigaChat и Алисе. <b>Прогони один и тот же промпт в двух-трёх и сравни ответы</b> – заодно поймёшь, чей стиль тебе ближе и где на самом деле удобнее работать.</div>
+</div>
+</section>
+
+<section>
+  <div class="wrap">
+    <article class="p" id="z1">
+      <div class="thead"><span class="tnum">Задача 1</span><span class="tmin">40 минут</span></div>
+      <h3>Найти проблему и сразу увидеть прототип</h3>
+      <p class="p-out" style="margin-top:8px">Мы не будем спрашивать «придумай мне продукт» – ничего хорошего из этого не выходит. Мы попросим посмотреть, что у людей болит, и предложить, что из этого решается одним файлом. Разница огромная.</p>
+
+      <ol class="steps">
+        <li>Если бонус 1 <a href="../auditoriya/">«Кто твой человек»</a> уже пройден, приложи файл с портретом аудитории прямо к сообщению – с ним ответ будет заметно точнее. <b>Файла нет – не страшно:</b> ответь на вопросы промпта своими словами, как понимаешь свою аудиторию прямо сейчас. Нейросети не нужны идеальные формулировки, ей нужен любой живой ввод.</li>
+        <li>Скопируй промпт, заполни розовые куски и отправь.</li>
+        <li><b>Выбери одну идею.</b> Не 3, а одну – ту, которую хочется сделать прямо сегодня.</li>
+      </ol>
+
+      <div class="promptbox"><pre>Помоги найти, что из моей экспертизы можно превратить в мини-продукт – один файл, который решает одну проблему за один заход.
+
+Что я знаю про свою аудиторию: <span class="tok">[ПРИЛОЖИ ФАЙЛ С ПОРТРЕТОМ АУДИТОРИИ ИЛИ ПРОСТО ОПИШИ СВОИМИ СЛОВАМИ, КАК ПОНИМАЕШЬ СЕЙЧАС]</span>
+Живые фразы людей, если есть: <span class="tok">[ЦИТАТЫ ИЗ ОТЗЫВОВ, ВОПРОСОВ, ПЕРЕПИСОК]</span>
+Что я умею и делаю руками: <span class="tok">[ПЕРЕЧИСЛИ 5-7 ВЕЩЕЙ, ДАЖЕ МЕЛКИХ]</span>
+Что меня чаще всего спрашивают: <span class="tok">[ВОПРОСЫ, КОТОРЫЕ ЗАДАЮТ РЕГУЛЯРНО]</span>
+
+Сделай так:
+1. Вытащи 5 конкретных проблем моей аудитории – формулировками самих людей, а не профессиональными.
+2. Отбери те, что решаются одним файлом за один вечер работы. Остальные отбрось и скажи, почему.
+3. По каждой оставшейся предложи идею мини-продукта: что это, какой формат – чек-лист, шаблон, тест с результатом, считалка, набор фраз, воркбук – и почему именно этот формат.
+4. Для самой сильной идеи сразу набросай прототип: из каких блоков состоит файл, что в каждом блоке, что человек делает на каждом шаге и что у него получается в конце.
+5. Скажи, что в этом продукте могу дать только я – мой опыт, мои примеры, мои случаи.
+
+Не предлагай «полное руководство» и «всё о...» – это не мини-продукт. Опирайся только на то, что перечислено выше, не выдумывай мне экспертизу.</pre></div>
+      <div class="btns"><button class="btn" data-copy>Копировать промпт</button><button class="btn ghost" data-open>Открыть ChatGPT</button></div>
+      <p class="hint">Розовым выделено то, что нужно заменить. Скобки удаляй вместе с подсказкой.</p>
+
+      <div class="res"><b>Что должно получиться:</b> одна идея и набросок прототипа – список блоков будущего файла. Если ни одна идея не откликается, попроси спокойно: «Ещё 5 вариантов, ближе к тому, что я делаю каждый день». Обычно со второго захода находится то самое.</div>
+    </article>
+
+    <article class="p" id="z2">
+      <div class="thead"><span class="tnum">Задача 2</span><span class="tmin">20 минут</span></div>
+      <h3>Убедиться, что это кому-то нужно</h3>
+      <p class="p-out" style="margin-top:8px"><b>Двадцать минут проверки экономят целые выходные</b>, потраченные на то, чего никто не ждал. И часто именно здесь становится понятно, чем ты можешь отличаться от того, что уже есть.</p>
+
+      <div class="tool"><b>Где делать:</b> оставайся в том же чате, где придумывали идею – он уже знает контекст. Единственное, включи в нём поиск по интернету: обычно это кнопка с глобусом или пункт «Поиск». Без поиска нейросеть просто согласится с тобой, а нам сейчас нужно ровно обратное. Поиска в твоём чате нет – тогда перенеси идею в <a href="https://www.perplexity.ai" target="_blank" rel="noopener">Perplexity</a>, он ищет всегда.</div>
+
+      <ol class="steps">
+        <li>Вставь промпт прямо в тот же диалог и впиши свою идею.</li>
+        <li>Открой 2–3 ссылки и проверь, что они действительно про то самое.</li>
+        <li>Самый полезный ответ звучит так: «тему берут, но жалуются вот на это». Там и есть твоё место.</li>
+      </ol>
+
+      <div class="promptbox"><pre>Проверь мою идею мини-продукта. Твоя задача – не поддержать меня, а найти слабые места. Используй поиск в интернете.
+
+Идея: <span class="tok">[ЧТО ЭТО, ОДНОЙ ФРАЗОЙ]</span>
+Для кого: <span class="tok">[АУДИТОРИЯ]</span>
+Формат: <span class="tok">[ЧЕК-ЛИСТ / ШАБЛОН / ТЕСТ / СЧИТАЛКА]</span>
+
+Ответь по пунктам:
+1. Ищут ли люди эту проблему своими словами. Приведи реальные формулировки запросов и обсуждений со ссылками.
+2. Кто уже решает её и как. 2–3 примера со ссылками.
+3. На что жалуются в существующих решениях: чего не хватает, что раздражает.
+4. Чем моё может отличаться – конкретно, а не «лучше и качественнее».
+5. Признаки, что идею брать не стоит. Если они есть – скажи прямо.
+
+Не подтверждай идею из вежливости. Слабая – так и скажи и предложи, как её сузить или переформулировать.</pre></div>
+      <div class="btns"><button class="btn" data-copy>Копировать промпт</button><a class="btn ghost" href="https://www.perplexity.ai" target="_blank" rel="noopener">Открыть Perplexity, если нужен</a></div>
+
+      <div class="res"><b>Что должно получиться:</b> понимание, что уже есть у других и чем ты можешь быть полезнее. Плюс 1–2 правки к идее – и это хорошо, значит проверка была не зря.</div>
+    </article>
+
+    <article class="p" id="z3">
+      <div class="thead"><span class="tnum">Задача 3</span><span class="tmin">полтора часа</span></div>
+      <h3>Собрать прототип и научиться его доводить</h3>
+      <p class="p-out" style="margin-top:8px">Самое ценное здесь – не получить идеальный файл с первого раза. Такого не бывает. <b>Ценно другое: научиться разговаривать с нейросетью так, чтобы доводить сделанное до нужного.</b> Этот навык потом пригодится вообще везде.</p>
+
+      <ol class="steps">
+        <li>Скопируй промпт, вставь идею и прототип из первой задачи.</li>
+        <li>Получишь файл и список команд, которыми его правят. <b>Попробуй хотя бы 3 правки</b> – вот это и есть навык, ради которого мы здесь.</li>
+        <li>Готовый файл оформи по стилю из бонуса 3 <a href="../stili/">«10 готовых стилей»</a>, если он ещё не оформлен.</li>
+      </ol>
+
+      <div class="promptbox"><pre>Собери первую версию моего мини-продукта.
+
+Идея и прототип:
+"""
+<span class="tok">[ВСТАВЬ ИДЕЮ И НАБРОСОК БЛОКОВ ИЗ ПЕРВОЙ ЗАДАЧИ]</span>
+"""
+
+Мой голос: <span class="tok">[ПРИЛОЖИ ПАСПОРТ СТИЛЯ ФАЙЛОМ ИЛИ ПРОСТО ПАРУ СВОИХ ТЕКСТОВ – ХВАТИТ И ЭТОГО]</span>
+
+Сделай:
+1. Собери файл HTML: одна страница, всё оформление внутри файла, читается с телефона, печатается в PDF без обрезанных блоков.
+2. Там, где нужен мой личный пример или случай, поставь пометку [СЮДА МОЙ ПРИМЕР] и в скобках подскажи, какой пример здесь подойдёт. Не выдумывай истории и цифры за меня.
+3. Если по формату уместно – сделай его интерактивным: поля для заполнения, галочки, подсчёт результата.
+
+После файла напиши отдельно:
+– какие 3 вещи в этом прототипе спорные и почему
+– список команд, которыми я могу его дорабатывать: как попросить сократить, добавить блок, поменять порядок, изменить тон, сделать проще для новичка. Приведи готовые формулировки, которые я просто скопирую.
+
+Работаем дальше по кругу: я говорю, что поменять, ты возвращаешь обновлённый файл целиком.
+
+И обязательно объясни максимально простыми словами, как мне сохранить этот файл и открыть его: я делаю это впервые и я не технарь. Если файл можно опубликовать ссылкой, чтобы отправить людям, – расскажи и про это, по шагам.</pre></div>
+      <div class="btns"><button class="btn" data-copy>Копировать промпт</button><button class="btn ghost" data-open>Открыть ChatGPT</button></div>
+
+      <div class="res"><b>Что должно получиться:</b> файл, который можно открыть, показать 5 живым людям и спросить, всё ли понятно. Их вопросы перепишут продукт лучше, чем ещё 3 дня твоих правок – проверено много раз.</div>
+    </article>
+  </div>
+</section>
+
+<section id="katalog">
+  <div class="wrap">
+    <div class="kick">Из чего выбирать</div>
+    <h2>Каталог форматов мини-продуктов</h2>
+    <p>Один и тот же материал живёт в любом из них: чек-лист превращается в шаблон, шаблон – в воркбук, воркбук – в мини-курс. Начни с самого быстрого, посмотри на отклик, дальше усложняй.</p>
+    <div class="fgrid"><div class="fcard">
+      <h3>Чек-лист</h3>
+      <div class="fd">Список того, что проверить или не забыть, в правильном порядке. Самый быстрый формат, который при этом реально используют.</div>
+      <div class="fx">Пример: «17 пунктов проверить перед тем, как отдавать сайт заказчику»</div>
+      <div class="fm">Текст плюс оформление по дизайн-коду. Пара часов.</div>
+    </div><div class="fcard">
+      <h3>Шаблон-заготовка</h3>
+      <div class="fd">Готовая форма, в которую человек подставляет своё: документ, таблица, структура письма, план.</div>
+      <div class="fx">Пример: «Таблица учёта заказов для мастера маникюра»</div>
+      <div class="fm">Собирается в таблице или документе. 2–3 часа.</div>
+    </div><div class="fcard">
+      <h3>Мини-гайд</h3>
+      <div class="fd">Инструкция от начала до конца по одной узкой задаче. Не «всё о питании», а «что есть в первую неделю после родов».</div>
+      <div class="fx">Пример: «Как за вечер собрать резюме, на которое отвечают»</div>
+      <div class="fm">10–20 страниц с примерами. Выходные.</div>
+    </div><div class="fcard">
+      <h3>Разбор одного случая</h3>
+      <div class="fd">Одна история клиента подробно: что было, что сделали, что вышло. Продаёт лучше любого описания услуги.</div>
+      <div class="fx">Пример: «Как мы за месяц вернули клиента, который уже ушёл к конкуренту»</div>
+      <div class="fm">Нужно согласие клиента. 2–4 часа.</div>
+    </div><div class="fcard">
+      <h3>Подборка</h3>
+      <div class="fd">Что читать, смотреть, покупать, куда идти. Экономит человеку часы поиска – и показывает твой вкус.</div>
+      <div class="fx">Пример: «12 бесплатных сервисов, которые заменяют платные»</div>
+      <div class="fm">Главное – личные пометки к каждому пункту. 2–3 часа.</div>
+    </div><div class="fcard">
+      <h3>Тест-диагностика</h3>
+      <div class="fd">Человек отвечает на вопросы и получает свой результат с рекомендациями. Даёт понять, где он сейчас.</div>
+      <div class="fx">Пример: «В какой точке выгорания вы находитесь»</div>
+      <div class="fm">Вопросы, варианты, тексты результатов. Выходные.</div>
+    </div><div class="fcard">
+      <h3>Считалка</h3>
+      <div class="fd">Считает то, что человек не может посчитать сам: норму, стоимость, сроки, нагрузку.</div>
+      <div class="fx">Пример: «Сколько стоит ваш час на самом деле»</div>
+      <div class="fm">Формулу задаёшь ты, оформление собирает нейросеть. Выходные.</div>
+    </div><div class="fcard">
+      <h3>Трекер или дневник</h3>
+      <div class="fd">Форма, которую заполняют регулярно. Держит человека рядом с тобой неделями, а не минуты.</div>
+      <div class="fx">Пример: «Дневник тренировок на 8 недель с недельными итогами»</div>
+      <div class="fm">Таблица или печатная форма. 3–4 часа.</div>
+    </div><div class="fcard">
+      <h3>Мини-курс в письмах</h3>
+      <div class="fd">Пять-семь коротких писем по одному шагу в каждом. Человек получает результат постепенно и привыкает к тебе.</div>
+      <div class="fx">Пример: «Неделя, чтобы разобрать шкаф: 7 писем»</div>
+      <div class="fm">Пишется на основе имеющихся текстов. Неделя.</div>
+    </div><div class="fcard">
+      <h3>Что сказать: фразы и скрипты</h3>
+      <div class="fd">Готовые формулировки для трудных ситуаций. Люди платят за то, чтобы не подбирать слова самим.</div>
+      <div class="fx">Пример: «Как ответить клиенту, который просит скидку»</div>
+      <div class="fm">Ситуация плюс две-три фразы на выбор. 2–4 часа.</div>
+    </div><div class="fcard">
+      <h3>База или каталог</h3>
+      <div class="fd">Собранная в одном месте таблица того, что разбросано по интернету. Ценность – в отборе и структуре.</div>
+      <div class="fx">Пример: «База из 80 грантов для НКО с условиями и сроками»</div>
+      <div class="fm">Долго собирать, зато живёт годами. Неделя.</div>
+    </div><div class="fcard">
+      <h3>Воркбук</h3>
+      <div class="fd">Рабочая тетрадь: короткая теория и задания, которые человек выполняет письменно. Даёт ощущение проделанной работы.</div>
+      <div class="fx">Пример: «Тетрадь на 5 дней: найти свою нишу»</div>
+      <div class="fm">Задания важнее теории. Выходные.</div>
+    </div><div class="fcard">
+      <h3>Мини-интенсив в записи</h3>
+      <div class="fd">Три коротких видео по одной теме плюс материалы. Первый платный продукт, который не страшно продавать.</div>
+      <div class="fx">Пример: «Три урока: как вести соцсети без выгорания»</div>
+      <div class="fm">Съёмка и монтаж. Неделя.</div>
+    </div><div class="fcard">
+      <h3>Живой разбор</h3>
+      <div class="fd">Групповая встреча, где ты разбираешь случаи участников. Продукта заранее нет – он рождается в моменте.</div>
+      <div class="fx">Пример: «Разбор пяти профилей за полтора часа»</div>
+      <div class="fm">Нужен только анонс и время. Пара часов на подготовку.</div>
+    </div></div>
+    <div class="soft" style="margin-top:24px">
+      <p><b>Не ищи идеальный формат.</b> Тот, что собирается за вечер и попадает в живую проблему, всегда лучше идеального, который ты не закончишь.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="soft">
+      <div class="kick">Что дальше</div>
+      <h3 style="margin:8px 0 10px">Один продукт руками – это старт. Дальше начинается интересное</h3>
+      <p style="color:#4a3d48">Мы прекрасно понимаем, что <b>продукт продукту рознь</b>. Одно дело – чек-лист на страницу, и совсем другое – таблица с расчётами, лендинг, большой гайд или интерактив, который сам считает и подстраивается под человека. Поэтому на курсе этому отведён целый модуль 3: там мы по очереди собираем документы, таблицы, расчёты и данные, визуал и интерактивные штуки – то, что нужно не только блогерам, но и специалистам в найме, и помогающим практикам.</p>
+      <p style="color:#4a3d48">А если захочется <b>поставить это на поток</b>, дальше идёт модуль 4: как превратить разовую сборку в понятный повторяемый процесс, где есть папка с материалами, помощник, который знает твою аудиторию и стиль, и путь от идеи до готового файла, который не нужно каждый раз изобретать заново.</p>
+      <p style="color:#4a3d48">И ещё одна вещь, о которой редко думают: <b>продукты можно делать не только для аудитории, но и для себя.</b> Ровно так же, как мы сейчас вытаскивали проблемы клиентов, можно пожаловаться нейросети на собственные – вечно теряющиеся договорённости, хаос в записях, расчёты, которые каждый раз делаешь заново, – и собрать себе решение под свою жизнь. Этим на курсе мы тоже занимаемся, и, честно говоря, именно эти штуки экономят больше всего времени.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="kick" style="color:#FF8FC6">Бонус за скорость</div>
+    <p style="margin-top:10px">Бонус 4 из 6 · <a href="../">вернуться ко всем бонусам</a></p>
+    <p class="small" style="margin-top:14px;color:#8a7c8a">Бонус к курсу Нейро-архитектор «ИИ для жизни и дела: от первого промпта до автономного помощника». Для личного использования участниками курса.</p>
+  </div>
+</footer>
+
+
+<div class="toast" id="toast">Промпт скопирован</div>
+<script>
+(function(){
+  var toast = document.getElementById('toast'), t;
+  function say(msg){
+    toast.textContent = msg; toast.classList.add('on');
+    clearTimeout(t); t = setTimeout(function(){ toast.classList.remove('on'); }, 2600);
+  }
+  function textOf(btn){
+    var scope = btn.closest('.det-body') || btn.closest('.kit') || btn.closest('.p') || btn.closest('section');
+    var box = scope.querySelector('.promptbox pre');
+    return box ? box.innerText : '';
+  }
+  function copy(text){
+    if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text);
+    return new Promise(function(res, rej){
+      var ta = document.createElement('textarea');
+      ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); res(); } catch(e){ rej(e); }
+      document.body.removeChild(ta);
+    });
+  }
+  document.querySelectorAll('[data-copy]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      copy(textOf(btn)).then(function(){
+        var old = btn.textContent;
+        btn.textContent = 'Скопировано ✓'; btn.classList.add('done');
+        say('Промпт скопирован. Вставь его в чат');
+        setTimeout(function(){ btn.textContent = old; btn.classList.remove('done'); }, 2400);
+      }).catch(function(){
+        say('Не вышло скопировать – выдели текст промпта вручную');
+      });
+    });
+  });
+  document.querySelectorAll('[data-open]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      copy(textOf(btn)).then(function(){
+        say('Промпт скопирован. В чате нажми вставить');
+        setTimeout(function(){ window.open('https://chatgpt.com/', '_blank', 'noopener'); }, 600);
+      }).catch(function(){
+        window.open('https://chatgpt.com/', '_blank', 'noopener');
+      });
+    });
+  });
+
+  // иконка копирования в правом верхнем углу каждого промпта
+  var ICON = '<svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M6 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1"/></svg>';
+  var OKICON = '<svg viewBox="0 0 24 24"><path d="M4 12.5L9.5 18L20 6.5"/></svg>';
+  document.querySelectorAll('.promptbox').forEach(function(box){
+    var pre = box.querySelector('pre'); if (!pre) return;
+    var b = document.createElement('button');
+    b.className = 'copyicon'; b.type = 'button';
+    b.setAttribute('aria-label', 'Копировать промпт'); b.title = 'Копировать промпт';
+    b.innerHTML = ICON;
+    b.addEventListener('click', function(){
+      copy(pre.innerText).then(function(){
+        b.innerHTML = OKICON; b.classList.add('done');
+        say('Промпт скопирован. Вставь его в чат');
+        setTimeout(function(){ b.innerHTML = ICON; b.classList.remove('done'); }, 2400);
+      }).catch(function(){ say('Не вышло скопировать – выдели текст промпта вручную'); });
+    });
+    box.appendChild(b);
+  });
+})();
+</script>
+</body>
+</html>
