@@ -151,7 +151,7 @@
     <article class="p car" id="karuseli">
       <div class="thead"><span class="tnum">Если нужны не отчёты, а карусели</span><span class="tmin">10 минут</span></div>
       <h3>Карусель для соцсетей – по тому же принципу</h3>
-      <p class="p-out">Нейросеть пишет текст слайдов, а оформляете вы в готовом редакторе каруселей: на каждый слайд три строки – метка, крупная мысль и пояснение, дальше фон, своё фото и скачать картинками. Тот же приём, что на практикуме: сначала нейросеть расспрашивает, потом делает.</p>
+      <p class="p-out">Как с отчётами: текст пишет нейросеть, а оформление – в готовом редакторе каруселей. У каждого слайда там три окошка – метка, крупная мысль и пояснение; дальше фон, своё фото и скачать картинками. И как на практикуме: сначала нейросеть расспрашивает, потом делает.</p>
       <div class="promptbox"><pre>Помоги мне сделать карусель для <span class="tok">[TELEGRAM / ВКОНТАКТЕ / INSTAGRAM]</span> на тему: <span class="tok">[ТЕМА]</span>.
 Для кого: <span class="tok">[МОЯ АУДИТОРИЯ]</span>. Что человек должен сделать после неё: <span class="tok">[ПОДПИСАТЬСЯ / НАПИСАТЬ МНЕ / СОХРАНИТЬ]</span>.
 
@@ -163,8 +163,8 @@
 Пояснение: одно-два коротких предложения
 
 Пиши живым языком, без штампов и канцелярита.</pre></div>
-      <div class="btns"><button class="btn" data-copy>Копировать промпт</button><a class="btn ghost" href="https://aiforlife.ru/ii-course/carousel/" target="_blank" rel="noopener" style="border-bottom:1px solid var(--line)">Открыть редактор каруселей</a></div>
-      <p class="hint">Готовые три строки по очереди вставьте в редактор – слайд соберётся сам. Если работаете в ChatGPT, можно попросить его сразу сделать слайды картинками 1080×1350 в ваших цветах – только проверьте текст на картинках на опечатки.</p>
+      <div class="btns"><button class="btn" data-copy>Копировать промпт</button><a class="btn ghost" href="https://aiforlife.ru/praktikum-ii/carousel/" target="_blank" rel="noopener" style="border-bottom:1px solid var(--line)">Открыть редактор каруселей</a></div>
+      <p class="hint">В редакторе перенесите строки каждого слайда в три окошка справа: «Метка», «Мысль» и «Пояснение» – сами эти слова копировать не нужно. Если работаете в ChatGPT, можно попросить его сразу сделать слайды картинками 1080×1350 в ваших цветах – только проверьте текст на картинках на опечатки.</p>
     </article>
   </div>
 </section>
@@ -179,7 +179,7 @@
       <div><span class="t">DOCX</span><b>Word – чтобы править</b><p>Когда документ дальше будут дописывать коллеги или вы сами – привычными кнопками.</p></div>
       <div><span class="t">XLSX</span><b>Таблица с графиками</b><p>Когда нужны расчёты: нейросеть соберёт таблицу с формулами и диаграммами.</p></div>
     </div>
-    <div class="callout"><b>Где это работает.</b> ChatGPT и Claude отдают готовые файлы для скачивания – кнопкой в ответе. Российские нейросети пока чаще отвечают только текстом – для них внизу страницы есть свой путь.</div>
+    <div class="callout"><b>Где это работает.</b> ChatGPT отдаёт готовый файл кнопкой прямо в ответе. В бесплатной версии на файлы есть лимит: если файла нет, попросите просто текст и оформите его в редакторе. Российские нейросети (GigaChat, Алиса) пока чаще отвечают только текстом – для них внизу страницы есть <a href="#shablony">готовые шаблоны и редактор</a>.</div>
   </div>
 </section>
 
@@ -254,13 +254,14 @@
 
 Правила: не придумывай факты и цифры – если чего-то не хватает, спроси; пиши коротко и по делу; цифры – крупно, выводы – отдельным блоком.</pre></div>
       <div class="btns"><button class="btn" data-copy>Копировать промпт</button><button class="btn ghost" data-open>Открыть ChatGPT</button></div>
+      <p class="hint">В GigaChat или Алисе файла, скорее всего, не будет – это нормально. Возьмите текст и оформите его <a href="#shablony">в редакторе внизу страницы</a>.</p>
     </article>
 
     <article class="p" id="p2">
       <div class="thead"><span class="tnum">Промпт 2</span><span class="tmin">отчёт · HTML</span></div>
       <h3>Наглядный отчёт из таблицы или цифр</h3>
-      <p class="p-out">Приложите файл (Excel, PDF, скриншот таблицы) или вставьте цифры прямо в сообщение.</p>
-      <div class="promptbox"><pre>Вот мои данные: <span class="tok">[ПРИЛОЖИ ФАЙЛ ИЛИ ВСТАВЬ ЦИФРЫ]</span>.
+      <p class="p-out">Приложите файл (Excel, PDF, скриншот таблицы) – это скрепка или «+» слева от поля ввода. Или вставьте цифры прямо в сообщение. Если приложили файл, в скобках просто напишите «в файле».</p>
+      <div class="promptbox"><pre>Вот мои данные: <span class="tok">[ПРИЛОЖИТЕ ФАЙЛ ИЛИ ВСТАВЬТЕ ЦИФРЫ]</span>.
 Сделай из них наглядный отчёт для <span class="tok">[РУКОВОДИТЕЛЯ / КЛИЕНТА / СЕБЯ]</span> в виде красивой HTML-страницы:
 1) сверху – 3–4 главные цифры крупными карточками;
 2) график, который лучше всего показывает динамику;
@@ -276,11 +277,12 @@
       <h3>Памятка на одну страницу</h3>
       <p class="p-out">Для клиентов, учеников, участников: правила, подготовка к встрече, частые вопросы.</p>
       <div class="promptbox"><pre>Сделай памятку на одну страницу А4 на тему: <span class="tok">[ТЕМА]</span>.
-Для кого: <span class="tok">[КТО БУДЕТ ЧИТАТЬ]</span>. Мои заметки: <span class="tok">[ВСТАВЬ ТЕКСТ ИЛИ НАДИКТУЙ]</span>.
+Для кого: <span class="tok">[КТО БУДЕТ ЧИТАТЬ]</span>. Мои заметки: <span class="tok">[ВСТАВЬТЕ ТЕКСТ ИЛИ НАДИКТУЙТЕ]</span>.
 
 Структура: заголовок, одна строка-подзаголовок, 2–3 раздела коротких пунктов, одна плашка «Важно». Пиши простым языком, без канцелярита.
 Оформление: <span class="tok">[МОИ ЦВЕТА]</span>, крупный заголовок, цветные маркеры, плашка выделена фоном. Отдай файлом PDF.</pre></div>
       <div class="btns"><button class="btn" data-copy>Копировать промпт</button></div>
+      <p class="hint">Если в PDF вместо русских букв квадратики – попросите «сделай то же самое HTML-страницей» и сохраните её в PDF по инструкции ниже. Или оформите текст в редакторе памяток.</p>
     </article>
 
     <article class="p" id="p4">
@@ -288,7 +290,7 @@
       <h3>Пошаговая инструкция для команды</h3>
       <p class="p-out">Из записи обучения, голосового сообщения или своих заметок – документ, который коллеги смогут дописывать.</p>
       <div class="promptbox"><pre>Сделай пошаговую инструкцию: <span class="tok">[КАК СДЕЛАТЬ ЧТО]</span>.
-Исходник: <span class="tok">[ПРИЛОЖИ РАСШИФРОВКУ, ЗАПИСЬ ИЛИ ЗАМЕТКИ]</span>.
+Исходник: <span class="tok">[ПРИЛОЖИТЕ РАСШИФРОВКУ, ЗАПИСЬ ИЛИ ЗАМЕТКИ]</span>.
 
 Нужно: короткое вступление – для кого и зачем; шаги с номерами, в каждом шаге одно действие и что должно получиться; после шагов, где это поможет, – место под скриншот с подписью, что на нём показать; в конце – частые ошибки.
 Отдай файлом Word (.docx), чтобы мы могли дописывать его сами.</pre></div>
@@ -324,7 +326,8 @@
           <li>Нажмите «Печать»: Ctrl+P на Windows или ⌘+P на Mac.</li>
           <li>В поле «Принтер» выберите «Сохранить как PDF» и нажмите «Сохранить».</li>
         </ol>
-        <p class="hint">Если по краям видны дата и адрес – в окне печати снимите галочку «Колонтитулы».</p>
+        <p class="hint">Если по краям видны дата и адрес – в окне печати снимите галочку «Колонтитулы» (иногда она спрятана в «Дополнительных настройках»).</p>
+        <p class="hint"><b>С телефона</b> HTML-файл может открыться как непонятный код. Тогда сразу просите у нейросети PDF или оформите текст в редакторе памяток – он работает и с телефона.</p>
       </div>
     </div>
   </div>
@@ -334,7 +337,7 @@
   <div class="wrap">
     <div class="kick">Готовый шаблон и редактор</div>
     <h2>Оформить за минуту – без дизайнера</h2>
-    <p>Если не хочется каждый раз просить нейросеть о вёрстке – возьмите готовые шаблоны. Попросите у любой нейросети текст (подойдут и российские: GigaChat, Алиса), вставьте его в редактор – и документ соберётся сам: в вашем цвете, с логотипом и подписью. Скачивается в PDF.</p>
+    <p>Если не хочется каждый раз просить нейросеть о вёрстке – возьмите готовые шаблоны. Попросите у любой нейросети текст (подойдут и российские: GigaChat, Алиса) – готовый промпт для этого есть на странице редактора. Скопируйте ответ <b>кнопкой «Копировать» под ответом нейросети</b>, а не выделением, вставьте в редактор – и документ соберётся сам: в вашем цвете, с логотипом и подписью. Сохраняется в PDF.</p>
     <div class="tpl-grid">
       <a class="tplc" href="https://aiforlife.ru/praktikum-ai/pamyatki/?t=memo" target="_blank" rel="noopener"><span class="ti">📋</span><b>Памятка</b><i>советы, правила, подготовка к встрече</i></a>
       <a class="tplc" href="https://aiforlife.ru/praktikum-ai/pamyatki/?t=check" target="_blank" rel="noopener"><span class="ti">✅</span><b>Чек-лист</b><i>пункты с галочками</i></a>
@@ -350,7 +353,7 @@
       <div class="ed">
         <h3>Редактор каруселей</h3>
         <p>Три строки на слайд, фон, своё фото – и готовые картинки для соцсетей. Тот же принцип: текст от нейросети, оформление – за вами в пару кликов.</p>
-        <div class="btns"><a class="btn ghost" href="https://aiforlife.ru/ii-course/carousel/" target="_blank" rel="noopener" style="border:none">Открыть редактор каруселей</a></div>
+        <div class="btns"><a class="btn ghost" href="https://aiforlife.ru/praktikum-ii/carousel/" target="_blank" rel="noopener" style="border:none">Открыть редактор каруселей</a></div>
       </div>
     </div>
   </div>
@@ -367,8 +370,8 @@
   function say(m){toast.textContent=m;toast.classList.add('on');clearTimeout(t);t=setTimeout(function(){toast.classList.remove('on')},2400)}
   function copy(x){if(navigator.clipboard&&window.isSecureContext)return navigator.clipboard.writeText(x);return new Promise(function(res,rej){var a=document.createElement('textarea');a.value=x;a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();try{document.execCommand('copy');res()}catch(e){rej(e)}document.body.removeChild(a)})}
   function textOf(b){return b.closest('.p').querySelector('.promptbox pre').innerText}
-  document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){copy(textOf(b)).then(function(){var o=b.textContent;b.textContent='Скопировано ✓';b.classList.add('done');say('Промпт скопирован. Вставь его в чат');setTimeout(function(){b.textContent=o;b.classList.remove('done')},2400)}).catch(function(){say('Не вышло скопировать – выдели текст вручную')})})});
-  document.querySelectorAll('[data-open]').forEach(function(b){b.addEventListener('click',function(){copy(textOf(b)).then(function(){say('Промпт скопирован. В чате нажми вставить');setTimeout(function(){window.open('https://chatgpt.com/','_blank','noopener')},600)}).catch(function(){window.open('https://chatgpt.com/','_blank','noopener')})})});
+  document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){copy(textOf(b)).then(function(){var o=b.textContent;b.textContent='Скопировано ✓';b.classList.add('done');say('Промпт скопирован. Вставьте его в чат');setTimeout(function(){b.textContent=o;b.classList.remove('done')},2400)}).catch(function(){say('Не вышло скопировать – выделите текст вручную')})})});
+  document.querySelectorAll('[data-open]').forEach(function(b){b.addEventListener('click',function(){copy(textOf(b)).then(function(){say('Промпт скопирован. В чате нажмите «Вставить»');setTimeout(function(){window.open('https://chatgpt.com/','_blank','noopener')},600)}).catch(function(){window.open('https://chatgpt.com/','_blank','noopener')})})});
 })();
 </script>
 </body>
