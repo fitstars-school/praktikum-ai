@@ -123,15 +123,25 @@
     .promptbox pre{font-size:12.8px}
     .btn{width:100%;justify-content:center}
   }
+  .tpl-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:24px;position:relative}
+  .tplc{display:block;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:18px;color:#fff;transition:transform .2s,border-color .2s}
+  .tplc:hover{transform:translateY(-2px);border-color:#FF8FC6}
+  .tplc .ti{font-size:24px}
+  .tplc b{display:block;font-size:17px;margin-top:8px}
+  .tplc i{display:block;font-style:normal;font-size:14px;color:#CBBFD0;margin-top:3px}
+  .ed-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;position:relative}
+  .ed{background:#fff;border-radius:var(--radius-lg);padding:24px;color:var(--ink)}
+  .ed h3{color:var(--ink)} .ed p{color:#4a3d48;font-size:16px;margin-top:8px}
+  @media (max-width:860px){.tpl-grid{grid-template-columns:1fr 1fr}.ed-row{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
 <header class="hero">
   <div class="wrap">
-    <div class="kick">Бонус практикума · отчёты и памятки</div>
+    <div class="kick">Бонус 3 · готовый шаблон и редактор памяток и отчётов</div>
     <h1>Отчёт или памятка <span class="g">с нейросетью</span> – красиво и наглядно</h1>
-    <p class="lead">Нейросеть умеет не только писать текст в чат. Она собирает готовый документ: страницу с карточками цифр, графиком и таблицей, аккуратную памятку на А4, инструкцию с шагами. Вы получаете файл, который не стыдно отправить, – и правите его словами: «сделай синим», «добавь график», «короче».</p>
+    <p class="lead">Нейросеть умеет не только писать текст в чат. Она собирает готовый документ: страницу с карточками цифр, графиком и таблицей, аккуратную памятку на А4, инструкцию с шагами. Вы получаете файл, который не стыдно отправить, – и правите его словами: «сделай синим», «добавь график», «короче». А в конце страницы – <a href="#shablony">готовые шаблоны и HTML-редактор</a>: вставили текст – и памятка или отчёт оформлены за минуту.</p>
   </div>
 </header>
 
@@ -281,7 +291,7 @@
 
 <section>
   <div class="wrap">
-    <div class="grid2">
+    <div class="grid2" style="grid-template-columns:1fr">
       <div class="card">
         <div class="kick">HTML → PDF</div>
         <h3>Как сохранить страницу в PDF</h3>
@@ -292,11 +302,31 @@
         </ol>
         <p class="hint">Если по краям видны дата и адрес – в окне печати снимите галочку «Колонтитулы».</p>
       </div>
-      <div class="card">
-        <div class="kick">Российские нейросети</div>
-        <h3>Если нейросеть отвечает только текстом</h3>
-        <p style="font-size:16px;color:#4a3d48;margin-top:10px">GigaChat и Алиса пока чаще не отдают файлы. Тогда попросите у них размеченный текст и вставьте его в наш редактор памяток – он сам соберёт документ А4 в ваших цветах и сохранит в PDF.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec-dark" id="shablony">
+  <div class="wrap">
+    <div class="kick">Готовый шаблон и редактор</div>
+    <h2>Оформить за минуту – без дизайнера</h2>
+    <p>Если не хочется каждый раз просить нейросеть о вёрстке – возьмите готовые шаблоны. Попросите у любой нейросети текст (подойдут и российские: GigaChat, Алиса), вставьте его в редактор – и документ соберётся сам: в вашем цвете, с логотипом и подписью. Скачивается в PDF.</p>
+    <div class="tpl-grid">
+      <a class="tplc" href="https://aiforlife.ru/praktikum-ai/pamyatki/?t=memo" target="_blank" rel="noopener"><span class="ti">📋</span><b>Памятка</b><i>советы, правила, подготовка к встрече</i></a>
+      <a class="tplc" href="https://aiforlife.ru/praktikum-ai/pamyatki/?t=check" target="_blank" rel="noopener"><span class="ti">✅</span><b>Чек-лист</b><i>пункты с галочками</i></a>
+      <a class="tplc" href="https://aiforlife.ru/praktikum-ai/pamyatki/?t=steps" target="_blank" rel="noopener"><span class="ti">🧭</span><b>Инструкция</b><i>шаги по порядку для команды</i></a>
+      <a class="tplc" href="https://aiforlife.ru/praktikum-ai/pamyatki/?t=report" target="_blank" rel="noopener"><span class="ti">📊</span><b>Отчёт</b><i>крупные цифры, таблица, выводы</i></a>
+    </div>
+    <div class="ed-row">
+      <div class="ed">
+        <h3>HTML-редактор памяток и отчётов</h3>
+        <p>4 шаблона, 6 цветов или свой, логотип, подпись, размер текста. На странице редактора – промпт, который подскажет нейросети, как подготовить текст.</p>
         <div class="btns"><a class="btn" href="https://aiforlife.ru/praktikum-ai/pamyatki/" target="_blank" rel="noopener" style="border:none">Открыть редактор памяток</a></div>
+      </div>
+      <div class="ed">
+        <h3>Редактор каруселей</h3>
+        <p>Три строки на слайд, фон, своё фото – и готовые картинки для соцсетей. Тот же принцип: текст от нейросети, оформление – за вами в пару кликов.</p>
+        <div class="btns"><a class="btn ghost" href="https://aiforlife.ru/ii-course/carousel/" target="_blank" rel="noopener" style="border:none">Открыть редактор каруселей</a></div>
       </div>
     </div>
   </div>
