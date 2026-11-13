@@ -313,6 +313,8 @@ report:`# Отчёт по продажам за октябрь
   var state={t:'memo',c:'#E6198C',f:'sans',size:15,sign:'',logo:''};
   var K='fs-pamyatki-v1';
   try{var saved=JSON.parse(localStorage.getItem(K)||'null'); if(saved){state=Object.assign(state,saved)}}catch(e){}
+  var qt=(location.search.match(/[?&]t=(memo|check|steps|report)/)||[])[1];
+  if(qt&&qt!==state.t){state.t=qt;state.text=''}
   src.value=state.text||EX[state.t];
 
   function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
