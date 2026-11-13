@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<!-- Редактор памяток и отчётов – бонус тарифа «Улучшенный» практикума (13.11.2026).
+     Публикация: «Опубликовать редактор памяток.command» → aiforlife.ru/praktikum-ai/pamyatki/ -->
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow, noarchive">
+<meta name="yandex" content="noindex, nofollow, noarchive">
+<title>Редактор памяток и отчётов · практикум по ИИ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@600;700;800&family=JetBrains+Mono:wght@400;600&family=PT+Serif:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --magenta:#E6198C; --magenta-d:#C0116E; --ink:#211829; --dark:#1B1420;
+    --wash:#FBF4F8; --line:#ECE1EC; --muted:#6b5c69;
+    --grad:linear-gradient(100deg,#E6198C 0%,#B23AE0 52%,#FF6B57 100%);
+    --radius:20px; --radius-lg:26px;
+    --shadow:0 18px 44px -26px rgba(120,20,90,.24);
+    /* цвет документа – меняется в редакторе */
+    --acc:#E6198C; --acc-soft:#FCE6F1; --acc-ink:#C0116E;
+    --doc-font:'Manrope',sans-serif; --doc-size:15px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Manrope',sans-serif;color:var(--ink);background:var(--wash);line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 22px}
+  h1{font-family:'Unbounded',sans-serif;font-weight:800;font-size:clamp(28px,4.6vw,46px);line-height:1.08;margin:10px 0 14px;text-wrap:balance}
+  h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  h2{font-family:'Unbounded',sans-serif;font-weight:700;font-size:clamp(22px,3vw,30px);line-height:1.15;margin-bottom:16px}
+  .kick{font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--magenta);margin-bottom:10px}
+  .lead{font-size:19px;color:#4a3d48;max-width:860px}
+  a{color:var(--magenta)}
+  header.hero{padding:44px 0 26px}
+  .how{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:24px}
+  .how div{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 18px;box-shadow:var(--shadow)}
+  .how b{display:block;font-size:16px;margin-top:4px}
+  .how span{font-family:'Unbounded',sans-serif;font-weight:700;font-size:13px;color:var(--magenta)}
+  .how p{font-size:14.5px;color:var(--muted);margin-top:4px}
+
+  /* ---- рабочая зона ---- */
+  .studio{display:grid;grid-template-columns:400px 1fr;gap:24px;align-items:start;padding:10px 0 40px}
+  .panel{background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);padding:22px;box-shadow:var(--shadow);position:sticky;top:16px}
+  .ph{font-weight:800;font-size:15px;margin:18px 0 9px;display:flex;justify-content:space-between;align-items:center}
+  .ph:first-child{margin-top:0}
+  .tpls{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+  .tpl{border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:10px 12px;font:700 14px 'Manrope',sans-serif;cursor:pointer;text-align:left;color:var(--ink)}
+  .tpl small{display:block;font-weight:500;font-size:12px;color:var(--muted)}
+  .tpl.on{border-color:var(--magenta);background:#FFF5FA}
+  textarea#src{width:100%;height:340px;resize:vertical;font:13.5px/1.6 'JetBrains Mono',monospace;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;color:var(--ink);background:#FDFBFC}
+  textarea#src:focus,.inp:focus{outline:none;border-color:var(--magenta)}
+  .inp{width:100%;font:15px 'Manrope',sans-serif;padding:10px 12px;border:1.5px solid var(--line);border-radius:12px}
+  .sw{display:flex;gap:9px;flex-wrap:wrap;align-items:center}
+  .sw button{width:32px;height:32px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 1.5px var(--line);cursor:pointer}
+  .sw button.on{box-shadow:0 0 0 2.5px var(--ink)}
+  .sw input[type=color]{width:34px;height:34px;border:none;background:none;cursor:pointer;padding:0}
+  .seg{display:flex;gap:6px;flex-wrap:wrap}
+  .seg button{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:7px 13px;font:700 13px 'Manrope',sans-serif;cursor:pointer;color:var(--ink)}
+  .seg button.on{border-color:var(--magenta);background:#FFF5FA;color:var(--magenta-d)}
+  input[type=range]{width:100%;accent-color:var(--magenta)}
+  .row{display:flex;gap:10px;align-items:center}
+  .btn{font:700 15px 'Manrope',sans-serif;border:none;border-radius:999px;padding:13px 20px;cursor:pointer;color:#fff;background:var(--grad);display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%}
+  .btn.ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line)}
+  .btns{display:grid;gap:8px;margin-top:18px}
+  .cheat{margin-top:12px;font-size:12.5px;color:var(--muted);line-height:1.6}
+  .cheat code{font-family:'JetBrains Mono',monospace;background:var(--wash);border:1px solid var(--line);border-radius:5px;padding:0 4px;color:var(--ink)}
+  .file{font-size:13px}
+
+  .stage{min-width:0}
+  .stage-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:13px;color:var(--muted);font-weight:700}
+  .paperwrap{overflow:hidden}
+  /* ---- документ A4 ---- */
+  .doc{width:210mm;min-height:297mm;background:#fff;box-shadow:0 30px 70px -36px rgba(60,10,50,.45);border-radius:6px;padding:16mm 16mm 18mm;font-family:var(--doc-font);font-size:var(--doc-size);line-height:1.55;color:#231B26;transform-origin:top left;position:relative}
+  .doc .d-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10mm}
+  .doc .d-logo{max-height:14mm;max-width:50mm;object-fit:contain}
+  .doc .d-tag{font-family:'Manrope',sans-serif;font-weight:800;font-size:.72em;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);border:1.5px solid var(--acc);border-radius:999px;padding:4px 12px}
+  .doc h1{font-family:'Unbounded',sans-serif;font-weight:800;font-size:2.15em;line-height:1.12;margin:0 0 .45em;color:#1E1622}
+  .doc .d-lead{font-size:1.12em;color:#4a3d48;margin-bottom:1.1em;padding-left:14px;border-left:4px solid var(--acc)}
+  .doc h2{font-family:'Unbounded',sans-serif;font-weight:700;font-size:1.22em;line-height:1.25;margin:1.4em 0 .6em;display:flex;align-items:center;gap:10px;color:#1E1622}
+  .doc h2::before{content:"";width:10px;height:10px;border-radius:3px;background:var(--acc);flex:0 0 auto}
+  .doc p{margin:.45em 0}
+  .doc b,.doc strong{font-weight:700;color:#1E1622}
+  .doc ul.d-ul{list-style:none;margin:.5em 0}
+  .doc ul.d-ul li{position:relative;padding-left:1.4em;margin:.35em 0}
+  .doc ul.d-ul li::before{content:"";position:absolute;left:.25em;top:.62em;width:.45em;height:.45em;border-radius:50%;background:var(--acc)}
+  .doc ul.d-chk{list-style:none;margin:.5em 0}
+  .doc ul.d-chk li{position:relative;padding-left:1.9em;margin:.45em 0}
+  .doc ul.d-chk li::before{content:"";position:absolute;left:0;top:.18em;width:1.15em;height:1.15em;border-radius:5px;border:2px solid var(--acc);background:#fff}
+  .doc ul.d-chk li.x::before{background:var(--acc)}
+  .doc ul.d-chk li.x::after{content:"✓";position:absolute;left:.22em;top:.02em;color:#fff;font-weight:800;font-size:.95em}
+  .doc ol.d-steps{list-style:none;counter-reset:st;margin:.6em 0}
+  .doc ol.d-steps li{counter-increment:st;position:relative;padding-left:2.6em;margin:.7em 0;min-height:1.9em}
+  .doc ol.d-steps li::before{content:counter(st);position:absolute;left:0;top:-.05em;width:1.9em;height:1.9em;border-radius:.6em;background:var(--acc);color:#fff;font-family:'Unbounded',sans-serif;font-weight:700;font-size:.9em;display:flex;align-items:center;justify-content:center}
+  .doc .d-note{background:var(--acc-soft);border-radius:12px;padding:.8em 1em .8em 1em;margin:.8em 0;border-left:5px solid var(--acc);break-inside:avoid}
+  .doc .d-note::before{content:"Важно";display:block;font-family:'Manrope',sans-serif;font-weight:800;font-size:.72em;letter-spacing:.12em;text-transform:uppercase;color:var(--acc-ink);margin-bottom:.2em}
+  .doc .d-tip{background:#F6F4F7;border-radius:12px;padding:.8em 1em;margin:.8em 0;break-inside:avoid}
+  .doc .d-tip::before{content:"Совет";display:block;font-family:'Manrope',sans-serif;font-weight:800;font-size:.72em;letter-spacing:.12em;text-transform:uppercase;color:#7a6c78;margin-bottom:.2em}
+  .doc .d-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(40mm,1fr));gap:4mm;margin:.9em 0;break-inside:avoid}
+  .doc .d-kpi{border:1.5px solid var(--acc-soft);background:linear-gradient(160deg,#fff,var(--acc-soft));border-radius:12px;padding:.7em .9em}
+  .doc .d-kpi b{display:block;font-family:'Unbounded',sans-serif;font-weight:700;font-size:1.45em;line-height:1.1;color:var(--acc-ink);white-space:nowrap}
+  .doc .d-kpi span{display:block;font-size:.85em;color:#5a4c58;margin-top:.2em}
+  .doc table{width:100%;border-collapse:collapse;margin:.8em 0;font-size:.93em;break-inside:avoid}
+  .doc th{background:var(--acc);color:#fff;text-align:left;font-weight:700;padding:.5em .7em}
+  .doc th:first-child{border-top-left-radius:8px}.doc th:last-child{border-top-right-radius:8px}
+  .doc td{padding:.5em .7em;border-bottom:1px solid #EEE6EC}
+  .doc tr:nth-child(even) td{background:#FBF8FA}
+  .doc hr{border:none;border-top:1.5px dashed #E4D8E2;margin:1.2em 0}
+  .doc .d-foot{margin-top:12mm;padding-top:4mm;border-top:1px solid #EEE6EC;font-size:.8em;color:#8a7c88;display:flex;justify-content:space-between;gap:10px}
+  .doc.serif{--doc-font:'PT Serif',serif}
+
+  .promptbox{position:relative;background:#171B22;border-radius:16px;padding:46px 22px 22px;margin-top:14px}
+  .promptbox::before{content:"ПРОМПТ · КОПИРУЕТСЯ ЦЕЛИКОМ";position:absolute;top:16px;left:22px;font:600 11px 'JetBrains Mono',monospace;letter-spacing:.14em;color:#FF8FC6}
+  .promptbox pre span{background:rgba(230,25,140,.22);border:1px solid rgba(255,143,198,.45);border-radius:6px;padding:1px 5px;color:#FFC2E1;font-weight:600}
+  .promptbox pre{white-space:pre-wrap;font:13.5px/1.7 'JetBrains Mono',monospace;color:#DDE3EC}
+  .card{background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);padding:26px;box-shadow:var(--shadow)}
+  section{padding:10px 0 34px}
+  .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:12px 20px;border-radius:999px;font-weight:700;font-size:15px;opacity:0;pointer-events:none;transition:.3s;z-index:60}
+  .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+  footer{background:var(--dark);color:#bdb0bd;padding:40px 0;font-size:14px}
+
+  @media (max-width:980px){
+    .studio{grid-template-columns:1fr}
+    .panel{position:static}
+    .how{grid-template-columns:1fr}
+  }
+  @media (max-width:560px){ .wrap{padding:0 16px} textarea#src{height:260px} }
+
+  /* ---- печать: только документ, A4 ---- */
+  @page{size:A4;margin:0}
+  @media print{
+    body{background:#fff}
+    body > *:not(.studio-holder){display:none!important}
+    .studio-holder .wrap{padding:0;max-width:none}
+    .panel,.stage-h{display:none!important}
+    .studio{display:block;padding:0}
+    .paperwrap{overflow:visible;height:auto!important}
+    .doc{transform:none!important;box-shadow:none;border-radius:0;width:210mm;min-height:297mm}
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kick">Бонус практикума · шаблон и редактор</div>
+    <h1>Редактор <span class="g">памяток и отчётов</span></h1>
+    <p class="lead">Нейросеть пишет текст – редактор за секунду превращает его в аккуратный документ А4: памятку для клиентов, чек-лист, инструкцию для сотрудников или отчёт с цифрами. Свой цвет, свой логотип – и готовый PDF, который не стыдно отправить.</p>
+    <div class="how">
+      <div><span>1</span><b>Попроси текст у нейросети</b><p>Промпт ниже – он подскажет ей, как разметить текст под редактор.</p></div>
+      <div><span>2</span><b>Вставь текст слева</b><p>Документ справа соберётся сам. Править можно прямо в окне.</p></div>
+      <div><span>3</span><b>Выбери цвет – и скачай PDF</b><p>В окне печати выбери «Сохранить как PDF».</p></div>
+    </div>
+  </div>
+</header>
+
+<div class="studio-holder">
+  <div class="wrap">
+    <div class="studio">
+      <aside class="panel">
+        <div class="ph">Шаблон</div>
+        <div class="tpls" id="tpls">
+          <button class="tpl on" data-t="memo">Памятка<small>советы и правила</small></button>
+          <button class="tpl" data-t="check">Чек-лист<small>галочки по пунктам</small></button>
+          <button class="tpl" data-t="steps">Инструкция<small>шаги по порядку</small></button>
+          <button class="tpl" data-t="report">Отчёт<small>цифры и таблица</small></button>
+        </div>
+
+        <div class="ph">Текст <span style="font-weight:600;font-size:12px;color:var(--muted)">сохраняется в браузере</span></div>
+        <textarea id="src" spellcheck="false"></textarea>
+        <div class="cheat">
+          <code># </code> заголовок · <code>## </code> раздел · <code>- </code> пункт · <code>1. </code> шаг · <code>[ ] </code> галочка · <code>! </code> важно · <code>&gt; </code> совет · <code>= 120 | клиентов</code> цифра · <code>| а | б |</code> таблица · <code>**жирный**</code>
+        </div>
+
+        <div class="ph">Цвет</div>
+        <div class="sw" id="sw">
+          <button style="background:#E6198C" data-c="#E6198C" class="on" title="Розовый"></button>
+          <button style="background:#2F6FEB" data-c="#2F6FEB" title="Синий"></button>
+          <button style="background:#0E9F6E" data-c="#0E9F6E" title="Зелёный"></button>
+          <button style="background:#E8590C" data-c="#E8590C" title="Оранжевый"></button>
+          <button style="background:#7048E8" data-c="#7048E8" title="Фиолетовый"></button>
+          <button style="background:#343A40" data-c="#343A40" title="Графит"></button>
+          <input type="color" id="cc" value="#E6198C" title="Свой цвет">
+        </div>
+
+        <div class="ph">Шрифт</div>
+        <div class="seg" id="font"><button class="on" data-f="sans">Современный</button><button data-f="serif">Классический</button></div>
+
+        <div class="ph">Размер текста</div>
+        <input type="range" id="size" min="12" max="19" step="0.5" value="15">
+
+        <div class="ph">Подпись внизу</div>
+        <input class="inp" id="sign" type="text" placeholder="Например: Анна Иванова · @anna_ai · 8 900 000-00-00">
+
+        <div class="ph">Логотип</div>
+        <div class="row"><input class="file" type="file" id="logo" accept="image/*"><button class="tpl" id="nologo" style="padding:6px 10px;font-size:12px">Убрать</button></div>
+
+        <div class="btns">
+          <button class="btn" id="pdf">Скачать PDF</button>
+          <button class="btn ghost" id="reset">Вернуть пример шаблона</button>
+        </div>
+      </aside>
+
+      <div class="stage">
+        <div class="stage-h"><span>Предпросмотр · А4</span><span id="scaleinfo"></span></div>
+        <div class="paperwrap" id="pw"><div class="doc" id="doc"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="card">
+      <div class="kick">Шаг 1 · текст от нейросети</div>
+      <h2>Промпт: подготовь текст под редактор</h2>
+      <p style="color:#4a3d48">Замени розовое в скобках на своё и отправь в чат. Готовый ответ скопируй целиком и вставь в окно «Текст».</p>
+      <div class="promptbox"><pre id="pr">Подготовь текст для <span>[ПАМЯТКИ / ЧЕК-ЛИСТА / ИНСТРУКЦИИ / ОТЧЁТА]</span> на тему: <span>[ТЕМА]</span>.
+Для кого: <span>[КТО БУДЕТ ЧИТАТЬ – КЛИЕНТЫ, СОТРУДНИКИ, РУКОВОДИТЕЛЬ]</span>.
+Исходные материалы: <span>[ВСТАВЬ ЗАМЕТКИ, ЦИФРЫ ИЛИ ПРИЛОЖИ ФАЙЛ]</span>.
+
+Пиши коротко и по делу: документ должен поместиться на 1–2 страницы А4. Не придумывай факты и цифры – если чего-то не хватает, спроси меня.
+
+Размечай текст строго так, без других символов разметки:
+# Заголовок документа (один)
+Строка сразу после заголовка – короткий подзаголовок, одна фраза
+## Название раздела
+- пункт списка
+1. шаг инструкции
+[ ] пункт чек-листа
+! важное предупреждение (одна строка)
+&gt; полезный совет (одна строка)
+= 120 | подпись к цифре (ключевые показатели для отчёта, по одному на строку)
+| Колонка | Колонка | – таблица, первая строка – заголовки
+**слово** – выделение жирным
+
+Отдай текст одним блоком, без пояснений до и после.</pre></div>
+      <div class="btns" style="max-width:360px"><button class="btn" id="cp">Копировать промпт</button></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">Бонус практикума «ИИ-помощник в вашем деле» · FitStars. Всё, что вы пишете в редакторе, остаётся в вашем браузере – мы ничего не видим и никуда не сохраняем.</div>
+</footer>
+
+<div class="toast" id="toast">Скопировано</div>
+
+<script>
+(function(){
+  var EX={
+memo:`# Как подготовиться к первой консультации
+Пять простых шагов, чтобы встреча прошла спокойно и с пользой
+## Что сделать заранее
+- Запишите **3 главных вопроса** – с них начнём
+- Соберите документы, о которых говорили в переписке
+- Проверьте связь и зарядку за 10 минут до начала
+! Если планы поменялись – предупредите за сутки, перенесём без доплаты
+## Во время встречи
+- Говорите как есть, без подготовки «красивых» формулировок
+- Записывайте решения, а не всё подряд
+> Попросите нейросеть сделать из записи встречи короткий список задач – это 2 минуты
+## После встречи
+- В течение дня придёт письмо с итогами
+- Ответ на уточняющие вопросы – в течение 24 часов`,
+check:`# Чек-лист запуска нового месяца
+Пройдите по пунктам в первый рабочий день месяца
+## Деньги
+[x] Выставлены счета постоянным клиентам
+[ ] Проверены поступления за прошлый месяц
+[ ] Оплачены подписки и сервисы
+## Работа
+[ ] Выбрана одна главная цель месяца
+[ ] Цель разбита на шаги по неделям
+[ ] Шаги поставлены в календарь блоками
+## Забота о себе
+[ ] Запланированы 2 дня без работы
+! Пункт, который переносится третий месяц подряд, – повод решить: делать или вычеркнуть`,
+steps:`# Как выставить счёт клиенту в 1С
+Инструкция для новых сотрудников отдела продаж
+## Перед началом
+- Убедитесь, что у клиента заполнены ИНН и реквизиты
+## Шаги
+1. Откройте раздел **Продажи** → **Счета покупателям**
+2. Нажмите **Создать** и выберите клиента из списка
+3. Добавьте услугу и проверьте сумму
+4. Нажмите **Записать**, затем **Печать** → **Счёт на оплату**
+5. Отправьте счёт клиенту на почту из карточки
+! Не меняйте номер счёта вручную – программа присваивает его сама
+> Если клиента нет в списке – создайте его через кнопку «+» рядом с полем`,
+report:`# Отчёт по продажам за октябрь
+Коротко: что получилось, что нет и что делаем в ноябре
+## Главные цифры
+= 412 000 ₽ | выручка за месяц
+= +18% | к сентябрю
+= 37 | новых клиентов
+= 64% | доходят до оплаты
+## По направлениям
+| Направление | Выручка | Клиенты | Динамика |
+| Консультации | 186 000 ₽ | 21 | +12% |
+| Курс | 158 000 ₽ | 11 | +31% |
+| Разборы | 68 000 ₽ | 5 | −4% |
+## Выводы
+- Курс растёт быстрее всего – люди приходят с практикума
+- Разборы проседают: мало упоминаний в блоге
+! 9 человек бросили корзину на шаге оплаты – нужен звонок в течение суток
+## План на ноябрь
+1. Вернуть брошенные корзины – напоминание и звонок
+2. Две истории о разборах в блоге каждую неделю
+3. Цель месяца – 450 000 ₽`
+  };
+  var src=document.getElementById('src'), doc=document.getElementById('doc'), pw=document.getElementById('pw');
+  var state={t:'memo',c:'#E6198C',f:'sans',size:15,sign:'',logo:''};
+  var K='fs-pamyatki-v1';
+  try{var saved=JSON.parse(localStorage.getItem(K)||'null'); if(saved){state=Object.assign(state,saved)}}catch(e){}
+  src.value=state.text||EX[state.t];
+
+  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+  function inl(s){return esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>')}
+  function mix(hex,amt){var n=parseInt(hex.slice(1),16),r=n>>16,g=n>>8&255,b=n&255;function m(c){return Math.round(c+(255-c)*amt)}return 'rgb('+m(r)+','+m(g)+','+m(b)+')'}
+  function dark(hex,amt){var n=parseInt(hex.slice(1),16),r=n>>16,g=n>>8&255,b=n&255;function m(c){return Math.round(c*(1-amt))}return 'rgb('+m(r)+','+m(g)+','+m(b)+')'}
+  var TAG={memo:'Памятка',check:'Чек-лист',steps:'Инструкция',report:'Отчёт'};
+
+  function render(){
+    var lines=src.value.replace(/\r/g,'').split('\n'), h=[], list=null, i=0, sawTitle=false, leadDone=false;
+    function close(){if(list){h.push('</'+list.tag+'>');list=null}}
+    function open(tag,cls){if(!list||list.cls!==cls){close();h.push('<'+tag+' class="'+cls+'">');list={tag:tag,cls:cls}}}
+    while(i<lines.length){
+      var l=lines[i].trim(); i++;
+      if(!l){close();continue}
+      var m;
+      if(/^#\s+/.test(l)&&!/^##/.test(l)){close();h.push('<h1>'+inl(l.replace(/^#\s+/,''))+'</h1>');sawTitle=true;continue}
+      if(sawTitle&&!leadDone&&!/^(##|-|\d+\.|\[|!|>|=|\|)/.test(l)){h.push('<p class="d-lead">'+inl(l)+'</p>');leadDone=true;continue}
+      leadDone=true;
+      if(/^##\s+/.test(l)){close();h.push('<h2>'+inl(l.replace(/^##\s+/,''))+'</h2>');continue}
+      if(m=l.match(/^\[( |x|х|X|Х)?\]\s*(.*)$/)){open('ul','d-chk');h.push('<li'+(m[1]&&m[1].trim()?' class="x"':'')+'>'+inl(m[2])+'</li>');continue}
+      if(/^[-•*]\s+/.test(l)){open('ul','d-ul');h.push('<li>'+inl(l.replace(/^[-•*]\s+/,''))+'</li>');continue}
+      if(/^\d+[.)]\s+/.test(l)){open('ol','d-steps');h.push('<li>'+inl(l.replace(/^\d+[.)]\s+/,''))+'</li>');continue}
+      if(/^!\s*/.test(l)){close();h.push('<div class="d-note">'+inl(l.replace(/^!\s*/,''))+'</div>');continue}
+      if(/^>\s*/.test(l)){close();h.push('<div class="d-tip">'+inl(l.replace(/^>\s*/,''))+'</div>');continue}
+      if(/^=\s*/.test(l)){
+        close(); var k=[l]; while(i<lines.length&&/^=\s*/.test(lines[i].trim())){k.push(lines[i].trim());i++}
+        h.push('<div class="d-kpis">'+k.map(function(x){var p=x.replace(/^=\s*/,'').split('|');return '<div class="d-kpi"><b>'+inl(p[0].trim())+'</b><span>'+inl((p[1]||'').trim())+'</span></div>'}).join('')+'</div>');continue}
+      if(/^\|/.test(l)){
+        close(); var rows=[l]; while(i<lines.length&&/^\|/.test(lines[i].trim())){rows.push(lines[i].trim());i++}
+        rows=rows.filter(function(r){return !/^\|[\s:|-]+\|?$/.test(r)});
+        var cells=rows.map(function(r){return r.replace(/^\||\|$/g,'').split('|').map(function(c){return inl(c.trim())})});
+        h.push('<table><tr>'+cells[0].map(function(c){return '<th>'+c+'</th>'}).join('')+'</tr>'+cells.slice(1).map(function(r){return '<tr>'+r.map(function(c){return '<td>'+c+'</td>'}).join('')+'</tr>'}).join('')+'</table>');continue}
+      if(/^-{3,}$/.test(l)){close();h.push('<hr>');continue}
+      close(); h.push('<p>'+inl(l)+'</p>');
+    }
+    close();
+    var top='<div class="d-top">'+(state.logo?'<img class="d-logo" src="'+state.logo+'" alt="">':'<span></span>')+'<span class="d-tag">'+TAG[state.t]+'</span></div>';
+    var foot=state.sign?'<div class="d-foot"><span>'+esc(state.sign)+'</span><span>'+TAG[state.t]+'</span></div>':'';
+    doc.innerHTML=top+h.join('')+foot;
+    doc.style.setProperty('--acc',state.c); doc.style.setProperty('--acc-soft',mix(state.c,.86)); doc.style.setProperty('--acc-ink',dark(state.c,.18));
+    doc.style.setProperty('--doc-size',state.size+'px');
+    doc.classList.toggle('serif',state.f==='serif');
+    fit(); save();
+  }
+  function fit(){
+    var w=pw.clientWidth, dw=doc.offsetWidth, s=Math.min(1,w/dw);
+    doc.style.transform='scale('+s+')'; pw.style.height=(doc.offsetHeight*s)+'px';
+    document.getElementById('scaleinfo').textContent=s<1?('масштаб '+Math.round(s*100)+'%'):'';
+  }
+  function save(){try{state.text=src.value;localStorage.setItem(K,JSON.stringify(state))}catch(e){}}
+
+  src.addEventListener('input',render);
+  document.querySelectorAll('#tpls .tpl').forEach(function(b){b.addEventListener('click',function(){
+    var cur=src.value.trim(), isEx=Object.keys(EX).some(function(k){return EX[k].trim()===cur});
+    state.t=b.dataset.t; document.querySelectorAll('#tpls .tpl').forEach(function(x){x.classList.toggle('on',x===b)});
+    if(isEx||!cur) src.value=EX[state.t];
+    render();
+  })});
+  document.querySelectorAll('#sw button').forEach(function(b){b.addEventListener('click',function(){state.c=b.dataset.c;document.getElementById('cc').value=state.c;mark();render()})});
+  document.getElementById('cc').addEventListener('input',function(e){state.c=e.target.value;mark();render()});
+  function mark(){document.querySelectorAll('#sw button').forEach(function(x){x.classList.toggle('on',x.dataset.c.toLowerCase()===state.c.toLowerCase())})}
+  document.querySelectorAll('#font button').forEach(function(b){b.addEventListener('click',function(){state.f=b.dataset.f;document.querySelectorAll('#font button').forEach(function(x){x.classList.toggle('on',x===b)});render()})});
+  var size=document.getElementById('size'); size.value=state.size; size.addEventListener('input',function(){state.size=+size.value;render()});
+  var sign=document.getElementById('sign'); sign.value=state.sign; sign.addEventListener('input',function(){state.sign=sign.value;render()});
+  document.getElementById('logo').addEventListener('change',function(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(){state.logo=r.result;render()};r.readAsDataURL(f)});
+  document.getElementById('nologo').addEventListener('click',function(){state.logo='';document.getElementById('logo').value='';render()});
+  document.getElementById('reset').addEventListener('click',function(){src.value=EX[state.t];render()});
+  document.getElementById('pdf').addEventListener('click',function(){window.print()});
+  window.addEventListener('resize',fit);
+  document.querySelectorAll('#tpls .tpl').forEach(function(x){x.classList.toggle('on',x.dataset.t===state.t)});
+  document.querySelectorAll('#font button').forEach(function(x){x.classList.toggle('on',x.dataset.f===state.f)});
+  document.getElementById('cc').value=state.c; mark();
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fit);
+  render();
+
+  var toast=document.getElementById('toast'),tt;
+  document.getElementById('cp').addEventListener('click',function(){
+    var t=document.getElementById('pr').innerText;
+    function ok(){toast.textContent='Промпт скопирован. Вставь его в чат';toast.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){toast.classList.remove('on')},2400)}
+    if(navigator.clipboard&&window.isSecureContext) navigator.clipboard.writeText(t).then(ok);
+    else{var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');ok()}catch(e){}document.body.removeChild(a)}
+  });
+})();
+</script>
+</body>
+</html>
