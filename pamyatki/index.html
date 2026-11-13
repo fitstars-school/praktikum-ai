@@ -314,7 +314,7 @@ report:`# Отчёт по продажам за октябрь
   var K='fs-pamyatki-v1';
   try{var saved=JSON.parse(localStorage.getItem(K)||'null'); if(saved){state=Object.assign(state,saved)}}catch(e){}
   var qt=(location.search.match(/[?&]t=(memo|check|steps|report)/)||[])[1];
-  if(qt&&qt!==state.t){state.t=qt;state.text=''}
+  if(qt&&qt!==state.t){var own=(state.text||'').trim(); var isEx=!own||Object.keys(EX).some(function(k){return EX[k].trim()===own}); state.t=qt; if(isEx) state.text=''}
   src.value=state.text||EX[state.t];
 
   function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
