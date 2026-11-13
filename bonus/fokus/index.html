@@ -192,6 +192,39 @@
   .shots img{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}
   .shots figcaption{font-size:13.5px;color:#9a8d98;margin-top:10px;line-height:1.5}
   .shots figcaption b{color:var(--ink)}
+
+  /* ---- конструктор помощника ---- */
+  .builder{background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);padding:30px;box-shadow:var(--shadow)}
+  .bq + .bq{margin-top:26px;padding-top:24px;border-top:1px solid var(--line)}
+  .bq-h{display:flex;align-items:center;gap:12px;font-weight:800;font-size:18px}
+  .bq-n{flex:0 0 auto;width:30px;height:30px;border-radius:10px;background:var(--grad);color:#fff;font-family:'Unbounded',sans-serif;font-size:13px;display:flex;align-items:center;justify-content:center}
+  .bq-s{font-size:15px;color:var(--muted);margin:6px 0 14px 42px}
+  .opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin-left:42px}
+  .opt{position:relative;display:block;cursor:pointer}
+  .opt input{position:absolute;opacity:0;pointer-events:none}
+  .opt span{display:block;height:100%;border:1.5px solid var(--line);border-radius:14px;padding:12px 14px 12px 44px;background:#fff;transition:border-color .2s,background .2s,box-shadow .2s;position:relative}
+  .opt span::before{content:"";position:absolute;left:14px;top:14px;width:18px;height:18px;border-radius:6px;border:1.5px solid #D9C6D6;background:#fff}
+  .opts-r .opt span::before{border-radius:50%}
+  .opt b{display:block;font-size:15.5px}
+  .opt i{display:block;font-style:normal;font-size:13.5px;color:var(--muted);margin-top:2px;line-height:1.4}
+  .opt:hover span{border-color:#F1D9EC}
+  .opt input:checked + span{border-color:var(--magenta);background:#FFF5FA;box-shadow:0 8px 20px -16px rgba(230,25,140,.6)}
+  .opt input:checked + span::before{background:var(--grad);border-color:transparent}
+  .opt input:checked + span::after{content:"✓";position:absolute;left:18px;top:13px;color:#fff;font-size:12px;font-weight:800}
+  .opt input:focus-visible + span{outline:2px solid var(--magenta);outline-offset:2px}
+  .field{width:100%;font-family:'Manrope',sans-serif;font-size:16px;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
+  .field:focus{outline:none;border-color:var(--magenta)}
+  .bq > .field{margin-left:42px;width:calc(100% - 42px)}
+  .row2{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0 0 42px}
+  .lab{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:700;color:var(--muted)}
+  .out{margin-top:30px;padding-top:26px;border-top:1px dashed #F1D9EC}
+  .out .promptbox pre{max-height:520px;overflow:auto}
+  @media (max-width:560px){
+    .builder{padding:20px 16px}
+    .bq-s,.opts,.row2{margin-left:0}
+    .bq > .field{margin-left:0;width:100%}
+    .row2{grid-template-columns:1fr}
+  }
 </style>
 </head>
 <body>
@@ -205,9 +238,15 @@
 
 <header class="hero">
   <div class="wrap">
-    <div class="kick">Бонус 6 · интерактивный конструктор</div>
+    <div class="kick">Бонус 6 · промпт-конструктор</div>
     <h1>Расхламление дня и <span class="g">расстановка фокуса</span></h1>
-    <p class="lead">На практикуме мы за минуту выгрузили хаос из головы и получили ТОП-3 на день. Здесь – тот же приём, только готовый к работе каждый день: <b>голосовой шаблон, который упорядочивает любой хаос в задачах и выводит 3 главных действия</b>. А дальше – как сделать так, чтобы нейросеть сама помогала держать фокус и не нужно было каждый раз объяснять всё заново. <b>4 задачи, примерно на час.</b></p>
+    <p class="lead">На практикуме мы выгрузили хаос из головы и за минуту получили ТОП-3 на день. Потом сверили список с целью на месяц, нашли для неё место в календаре – и собрали помощника, который держит фокус каждый день. Здесь всё это по шагам, а в конце – <b>конструктор: отмечаешь, какой помощник тебе нужен, и получаешь промпт, после которого нейросеть сама расспросит тебя и соберёт его под тебя</b>.</p>
+    <div class="flow">
+      <a href="#z1"><div class="n">1</div><div class="t">Разгрузить хаос</div><div class="s">ТОП-3 на сегодня</div></a>
+      <a href="#z2"><div class="n">2</div><div class="t">Сверить с целью</div><div class="s">что ведёт к цели месяца</div></a>
+      <a href="#z3"><div class="n">3</div><div class="t">В календарь</div><div class="s">блоки, а не «когда-нибудь»</div></a>
+      <a href="#z4"><div class="n">4</div><div class="t">Свой помощник</div><div class="s">конструктор промпта</div></a>
+    </div>
   </div>
 </header>
 
@@ -216,16 +255,17 @@
     <div class="kick">Почему это работает</div>
     <h2>Голова – не место для списка дел</h2>
     <p>Когда всё держишь в голове, всё кажется одинаково срочным, и силы уходят не на дела, а на то, чтобы о них помнить. Нейросеть не устаёт от твоих «а ещё вот это», видит всё целиком и честно показывает, что в день не помещается.</p>
-    <p><b>Главное правило:</b> выгружаешь всё как есть, без сортировки и самоцензуры – голосом, как думается. Сортировать – работа нейросети, а твоя – только решить, с чем ты согласна.</p>
+    <p>Но разгрузка – только первый шаг. В список «горящего» почти никогда не попадает то, что важно в течение месяца: своё обучение, свой проект, подготовка к экзамену. Поэтому дальше мы <b>сверяем день с целью</b> и ставим её в календарь повторяющимися блоками – чтобы каждый день была маленькая победа, а не надежда на свободное время.</p>
+    <p><b>Главное правило:</b> выгружаешь всё как есть, без сортировки и самоцензуры – голосом, как думается. Сортировать – работа нейросети, а твоя – решить, с чем ты согласна.</p>
   </div>
 </section>
 
 <section>
   <div class="wrap">
     <article class="p" id="z1">
-      <div class="thead"><span class="tnum">Задача 1</span><span class="tmin">5 минут</span></div>
-      <h3>Выгрузить хаос и получить 3 главных действия</h3>
-      <p class="p-out" style="margin-top:8px">Это основной шаблон – его можно запускать хоть каждое утро. Нейросеть сначала задаст пару вопросов, чтобы не планировать вслепую, и только потом соберёт день.</p>
+      <div class="thead"><span class="tnum">Шаг 1</span><span class="tmin">5 минут</span></div>
+      <h3>Выгрузить хаос и получить ТОП-3 на сегодня</h3>
+      <p class="p-out" style="margin-top:8px">Основной шаблон – его можно запускать хоть каждое утро. Нейросеть сначала задаст пару вопросов, чтобы не планировать вслепую, и только потом соберёт день.</p>
 
       <ol class="steps">
         <li>Скопируй промпт и отправь в новом чате.</li>
@@ -233,7 +273,7 @@
         <li>Ответь на её вопросы – и получишь план.</li>
       </ol>
 
-      <div class="promptbox"><pre>Ты мой главный операционный директор. Помоги мне навести порядок в голове и в этом дне. Сейчас я выгружу всё как есть, без порядка: дела, обещания, то, что висит и отвлекает.
+      <div class="promptbox"><pre>Помоги мне определиться с главными приоритетами на этот день. У меня каша в голове. Сейчас я выгружу всё как есть, без порядка: дела, обещания, то, что висит и отвлекает.
 
 Сначала ничего не планируй. Задай мне до 3 вопросов: сколько у меня сегодня реально свободных часов, что уже стоит в расписании и когда у меня больше сил.
 
@@ -241,78 +281,164 @@
 1) разложи всё по группам и убери шум и повторы;
 2) назови 3 главных действия на сегодня и объясни, почему именно они;
 3) покажи, что можно отложить, отдать другим, отдать ИИ или не делать вовсе;
-4) поставь 3 главных действия в расписание как встречи с собой – с конкретным временем – и оставь время на отдых;
-5) найди в этом дне 30 минут на то, до чего я из-за хаоса никак не дохожу: <span class="tok">[НАПРИМЕР, МОЁ ОБУЧЕНИЕ]</span>.
+4) поставь 3 главных действия в расписание как встречи с собой – с конкретным временем – и оставь время на отдых.
 
 Покажи итог коротко: время – дело.</pre></div>
       <div class="btns"><button class="btn" data-copy>Копировать промпт</button><button class="btn ghost" data-open>Открыть ChatGPT</button></div>
-      <p class="hint">Розовым выделено то, что можно заменить на своё. Скобки удаляй вместе с подсказкой.</p>
 
       <div class="tool"><b>Не нравится план – спорь.</b> Это твой день, нейросеть его только предлагает. Просто отправь следующим сообщением: «отдых не трогай», «после 19:00 я не работаю», «звонок клиенту важнее отчёта», «у меня всего 3 часа, а не 6».</div>
 
-      <div class="res"><b>Что должно получиться:</b> 3 главных действия на день, расписание с временем на отдых и короткий список того, что можно отложить или отдать. И 30 минут на то, до чего давно не доходили руки.</div>
-    </article>
-
-    <article class="p" id="z2">
-      <div class="thead"><span class="tnum">Задача 2</span><span class="tmin">10 минут</span></div>
-      <h3>Посмотреть, что из плана закроет ИИ</h3>
-      <p class="p-out" style="margin-top:8px">План готов – теперь посмотри на него глазами помощника. Чаще всего выясняется, что половину дел можно не делать в одиночку: где-то нейросеть сделает черновик, где-то соберёт структуру.</p>
-
-      <div class="promptbox"><pre>Посмотри на мой план и пройди по каждой задаче. Раздели их на 3 группы:
+      <details>
+        <summary>Ещё промпт: что из плана закроет ИИ</summary>
+        <div class="det-body">
+          <p>Посмотри на план глазами помощника. Чаще всего выясняется, что половину дел не обязательно делать в одиночку.</p>
+          <div class="promptbox"><pre>Посмотри на мой план и пройди по каждой задаче. Раздели их на 3 группы:
 1) ИИ сделает почти целиком – я только проверю;
 2) ИИ поможет – черновик, структура, вопросы, проверка;
 3) только я – встречи, решения, живое общение.
 
-Для первых двух групп напиши по каждой задаче, что тебе дать на вход и что получится на выходе.
+Для первых двух групп напиши по каждой задаче, что тебе дать на вход и что получится на выходе. В конце назови одну задачу, с которой выгоднее всего начать прямо сейчас.</pre></div>
+          <div class="btns"><button class="btn" data-copy>Копировать промпт</button></div>
+        </div>
+      </details>
 
-В конце назови одну задачу, с которой выгоднее всего начать прямо сейчас, и объясни почему.</pre></div>
+      <div class="res"><b>Что должно получиться:</b> 3 главных действия на день, расписание с временем на отдых и короткий список того, что можно отложить или отдать.</div>
+    </article>
+
+    <article class="p" id="z2">
+      <div class="thead"><span class="tnum">Шаг 2</span><span class="tmin">10 минут</span></div>
+      <h3>Сверить день с целью на месяц</h3>
+      <p class="p-out" style="margin-top:8px">В том же чате. Назови 1–2 цели, которых хочешь достичь за ближайший месяц: свой проект, обучение, экзамен, доход, новый график. Нейросеть проверит, приближает ли тебя к ним сегодняшний список, – и найдёт, что ты забыла.</p>
+
+      <div class="promptbox"><pre>Я поняла, что в моём списке нет того, что действительно важно на этот месяц. Мои цели на ближайший месяц: <span class="tok">[ЦЕЛЬ 1]</span> и <span class="tok">[ЦЕЛЬ 2]</span>.
+
+Посмотри на мой список дел:
+1) что из него приближает меня к этим целям, а что нет;
+2) чего не хватает – вдруг я что-то забыла или откладываю (важный разговор, первый шаг, подготовка);
+3) предложи, как встроить работу над целями в мою обычную неделю: конкретные повторяющиеся блоки по 15–30 минут, а не надежду на свободное время;
+4) разбей первую цель на маленькие шаги, чтобы каждый день у меня была маленькая победа.</pre></div>
       <div class="btns"><button class="btn" data-copy>Копировать промпт</button></div>
 
-      <div class="res"><b>Что должно получиться:</b> карта дня – что ты делаешь сама, а что можно поручить нейросети. Задачи, которые повторяются каждую неделю, – кандидаты в твоего будущего помощника.</div>
+      <div class="tool"><b>Цели пока нет?</b> Так тоже нормально. Напиши: «Помоги мне сформулировать одну цель на месяц: задай вопросы о том, что меня сейчас больше всего тяготит и чего я давно хочу». Любая цель звучит нормально – от «выйти из найма» до «наконец сдать на права».</div>
+
+      <div class="res"><b>Что должно получиться:</b> честный ответ, что из списка ведёт к цели, пара забытых важных дел и маленькие ежедневные шаги к цели месяца.</div>
     </article>
 
     <article class="p" id="z3">
-      <div class="thead"><span class="tnum">Задача 3</span><span class="tmin">5 минут</span></div>
-      <h3>Перенести план в календарь</h3>
-      <p class="p-out" style="margin-top:8px">План, который живёт только в чате, легко забыть. Главные дела и отдых должны стоять в календаре – тогда решать «когда же я это сделаю» больше не нужно.</p>
+      <div class="thead"><span class="tnum">Шаг 3</span><span class="tmin">5 минут</span></div>
+      <h3>Поставить главное в календарь</h3>
+      <p class="p-out" style="margin-top:8px">План, который живёт только в чате, легко забыть. ТОП-3 дня, блоки под цель и отдых должны стоять в календаре – тогда решать «когда же я это сделаю» больше не нужно.</p>
 
       <ol class="steps">
-        <li><b>Подключён Google Календарь в ChatGPT?</b> Попроси: «Внеси в мой календарь 3 главных дела и отдых на сегодня отдельными событиями».</li>
+        <li><b>Подключён Google Календарь в ChatGPT?</b> Попроси: «Внеси в мой календарь 3 главных дела, блоки под цель и отдых отдельными событиями».</li>
         <li><b>Не подключён или другой календарь?</b> Попроси файл – его понимают все календари. На компьютере открой его двойным щелчком, и события попадут в календарь.</li>
       </ol>
 
       <div class="promptbox"><pre>Сделай из этого плана файл для календаря в формате .ics, чтобы я могла скачать его и добавить в свой календарь.
 
-Каждое дело – отдельное событие: название, дата, время начала и длительность. Встречи с собой отметь в названии.
+Каждое дело – отдельное событие: название, дата, время начала и длительность. Блоки под цель месяца сделай повторяющимися на <span class="tok">[2 НЕДЕЛИ]</span>. Встречи с собой отметь в названии.
 
 Мой часовой пояс – <span class="tok">[НАПРИМЕР, МОСКВА]</span>.</pre></div>
       <div class="btns"><button class="btn" data-copy>Копировать промпт</button></div>
     </article>
+  </div>
+</section>
 
-    <article class="p" id="z4">
-      <div class="thead"><span class="tnum">Задача 4</span><span class="tmin">15 минут</span></div>
-      <h3>Закрепить в помощника, чтобы не объяснять заново</h3>
-      <p class="p-out" style="margin-top:8px">Чтобы завтра не рассказывать нейросети всё с начала, попроси её собрать инструкцию из сегодняшнего чата. Её можно положить в проект, а если проектов в твоей нейросети нет – вставлять в начало нового чата.</p>
+<section class="sec-dark" id="z4">
+  <div class="wrap">
+    <div class="kick">Шаг 4 · конструктор</div>
+    <h2>Собери своего помощника по фокусу</h2>
+    <p>Чтобы завтра не объяснять всё заново, нужен помощник – с твоей целью, твоими правилами и твоим ритмом. Отметь, как именно он должен тебе помогать, – ниже соберётся промпт. Нейросеть по нему сначала <b>расспросит тебя по одному вопросу</b>, покажет, как будет работать помощник, и только потом напишет для него инструкцию.</p>
+  </div>
+</section>
 
-      <div class="promptbox"><pre>Собери из нашего разговора инструкцию для моего помощника по фокусу дня. Включи:
-– кто я и чем занимаюсь;
-– мои ограничения: сколько у меня реально часов, когда больше сил, что всегда стоит в расписании;
-– мои приоритеты и то, что я обычно откладываю;
-– в каком виде мне удобен план;
-– правила: сначала вопросы, потом план; ровно 3 главных действия на день; время на отдых не трогать; то, что я откладываю, ставить как встречу с собой.
+<section>
+  <div class="wrap">
+    <div class="builder" id="builder">
 
-Напиши инструкцию одним блоком, чтобы её можно было вставить в проект или в начало нового чата в любой нейросети.</pre></div>
-      <div class="btns"><button class="btn" data-copy>Копировать промпт</button></div>
-
-      <div class="subblock">
-        <p class="sublabel">По желанию – напоминание каждое утро</p>
-        <p>Если в твоей нейросети есть задачи по расписанию (в ChatGPT они есть), помощник может сам напоминать о фокусе дня.</p>
-        <div class="promptbox" style="margin-top:10px"><pre>Каждый будний день в <span class="tok">[8:30]</span> спрашивай меня, что сегодня висит в голове, и помогай разложить это на 3 главных действия по инструкции моего помощника по фокусу дня.</pre></div>
-        <div class="btns"><button class="btn" data-copy>Копировать промпт</button></div>
+      <div class="bq">
+        <div class="bq-h"><span class="bq-n">1</span>Как помощник будет помогать</div>
+        <p class="bq-s">Отметь всё, что откликается. Можно одно, можно несколько.</p>
+        <div class="opts" data-group="does">
+          <label class="opt"><input type="checkbox" value="top3" checked><span><b>ТОП-3 на день</b><i>утром присылает 3 главных задачи и порядок</i></span></label>
+          <label class="opt"><input type="checkbox" value="chaos" checked><span><b>Разгрузка хаоса по запросу</b><i>выгружаю всё голосом – раскладывает по полкам</i></span></label>
+          <label class="opt"><input type="checkbox" value="goal" checked><span><b>Сверка с целью месяца</b><i>каждый день проверяет, приближает ли план к цели</i></span></label>
+          <label class="opt"><input type="checkbox" value="evening"><span><b>Вечерняя сверка плана</b><i>рассказываю, что получилось, – переносит остальное на завтра</i></span></label>
+          <label class="opt"><input type="checkbox" value="step"><span><b>Маленький шаг к цели</b><i>каждый день один шаг на 15–30 минут</i></span></label>
+          <label class="opt"><input type="checkbox" value="week"><span><b>Обзор недели</b><i>раз в неделю: что продвинулось и план на следующую</i></span></label>
+          <label class="opt"><input type="checkbox" value="drafts"><span><b>Черновики к утру</b><i>вечером даю задачи – утром готовые черновики</i></span></label>
+          <label class="opt"><input type="checkbox" value="rest"><span><b>Бережёт отдых</b><i>следит, чтобы в дне оставалось время на себя</i></span></label>
+        </div>
       </div>
 
-      <div class="res"><b>Что должно получиться:</b> твой первый помощник – по фокусу дня. Завтра хватит одного голосового сообщения, чтобы получить план.</div>
-    </article>
+      <div class="bq">
+        <div class="bq-h"><span class="bq-n">2</span>Цель на месяц</div>
+        <p class="bq-s">Если её пока нет – оставь пустым: помощник начнёт с того, что поможет её сформулировать.</p>
+        <input class="field" id="fGoal" type="text" placeholder="Например: сдать на права">
+      </div>
+
+      <div class="bq">
+        <div class="bq-h"><span class="bq-n">3</span>Когда удобно</div>
+        <div class="row2">
+          <label class="lab">Утро<input class="field" id="fMorning" type="text" value="8:30"></label>
+          <label class="lab">Вечер<input class="field" id="fEvening" type="text" value="21:00"></label>
+          <label class="lab">Обзор недели<input class="field" id="fWeek" type="text" value="воскресенье вечером"></label>
+        </div>
+      </div>
+
+      <div class="bq">
+        <div class="bq-h"><span class="bq-n">4</span>Каким тоном со мной говорить</div>
+        <div class="opts opts-r" data-group="tone">
+          <label class="opt"><input type="radio" name="tone" value="care" checked><span><b>Бережно</b><i>поддерживает, не давит</i></span></label>
+          <label class="opt"><input type="radio" name="tone" value="biz"><span><b>По-деловому</b><i>коротко и по пунктам</i></span></label>
+          <label class="opt"><input type="radio" name="tone" value="coach"><span><b>Как тренер</b><i>честно и с напором</i></span></label>
+          <label class="opt"><input type="radio" name="tone" value="fun"><span><b>С юмором</b><i>легко, без занудства</i></span></label>
+        </div>
+      </div>
+
+      <div class="bq">
+        <div class="bq-h"><span class="bq-n">5</span>В какой нейросети</div>
+        <div class="opts opts-r" data-group="where">
+          <label class="opt"><input type="radio" name="where" value="gpt" checked><span><b>ChatGPT</b><i>помощник в проекте + задачи по расписанию</i></span></label>
+          <label class="opt"><input type="radio" name="where" value="any"><span><b>Любая другая</b><i>инструкция вставляется в начало чата</i></span></label>
+          <label class="opt"><input type="radio" name="where" value="ru"><span><b>Российская</b><i>GigaChat, Алиса – без проектов и расписаний</i></span></label>
+        </div>
+      </div>
+
+      <div class="bq">
+        <div class="bq-h"><span class="bq-n">6</span>Как собираем</div>
+        <div class="opts opts-r" data-group="mode">
+          <label class="opt"><input type="radio" name="mode" value="ask" checked><span><b>Сначала опроси меня</b><i>вопросы по одному – лучший вариант для первого раза</i></span></label>
+          <label class="opt"><input type="radio" name="mode" value="fast"><span><b>Собери сразу</b><i>если уже ведёшь с нейросетью чат про свои дела</i></span></label>
+        </div>
+      </div>
+
+      <div class="out">
+        <div class="kick" style="margin-bottom:6px">Твой промпт</div>
+        <p class="bq-s" style="margin-bottom:0">Собирается сам, пока ты отмечаешь. Скопируй и отправь в новом чате.</p>
+        <div class="promptbox"><pre id="bOut"></pre></div>
+        <div class="btns"><button class="btn" data-copy>Копировать промпт</button><button class="btn ghost" data-open>Открыть ChatGPT</button></div>
+      </div>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <h3 style="margin-bottom:10px">Когда инструкция готова</h3>
+        <ul class="plain">
+          <li><b>ChatGPT:</b> создай проект «Мой фокус», вставь инструкцию в его настройки и веди все разговоры про дела внутри проекта.</li>
+          <li><b>Другие нейросети:</b> сохрани инструкцию в заметках и вставляй в начало нового чата. Начал путаться – новый чат с той же инструкцией.</li>
+          <li><b>Что-то не так</b> – не терпи, а поправь: «добавь в инструкцию правило: …» и попроси обновлённую версию.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 style="margin-bottom:10px">Расписание в ChatGPT</h3>
+        <p style="font-size:16px;color:#4a3d48">Утренняя сводка и обзор недели могут приходить сами. Внутри проекта напиши:</p>
+        <div class="promptbox" style="margin-top:12px"><pre>Создай запланированную задачу: каждый будний день в <span class="tok">[8:30]</span> присылай мне ТОП-3 задачи на день по инструкции этого проекта и спрашивай, что ещё висит в голове.</pre></div>
+        <div class="btns"><button class="btn" data-copy>Копировать промпт</button></div>
+      </div>
+    </div>
+
+    <div class="res" style="margin-top:26px"><b>Что должно получиться:</b> твой помощник по фокусу. Завтра хватит одного голосового сообщения, чтобы получить план, – а цель месяца больше не потеряется среди «горящего».</div>
   </div>
 </section>
 
@@ -321,7 +447,7 @@
     <div class="soft">
       <div class="kick">Что дальше</div>
       <h3 style="margin:8px 0 10px">Это только первый помощник</h3>
-      <p style="color:#4a3d48">Помощник по фокусу – самый простой: одна инструкция и короткий голосовой ввод каждый день. На курсе, в модуле 2, мы собираем таких помощников под твои задачи и методики, а в модуле 4 – систему, где нейросеть сама работает с твоими файлами и делами по расписанию.</p>
+      <p style="color:#4a3d48">Помощник по фокусу – самый простой: одна инструкция и короткий голосовой ввод каждый день. На курсе, в модуле 2, мы собираем помощников под твои задачи и методики с конструктором помощников, а в модуле 4 – систему, где нейросеть сама работает с твоими файлами и делами по расписанию.</p>
     </div>
   </div>
 </section>
@@ -345,7 +471,7 @@
     clearTimeout(t); t = setTimeout(function(){ toast.classList.remove('on'); }, 2600);
   }
   function textOf(btn){
-    var scope = btn.closest('.det-body') || btn.closest('.kit') || btn.closest('.p') || btn.closest('section');
+    var scope = btn.closest('.det-body') || btn.closest('.out') || btn.closest('.card') || btn.closest('.kit') || btn.closest('.p') || btn.closest('section');
     var box = scope.querySelector('.promptbox pre');
     return box ? box.innerText : '';
   }
@@ -400,6 +526,56 @@
     });
     box.appendChild(b);
   });
+})();
+// конструктор помощника по фокусу
+(function(){
+  var root=document.getElementById('builder'), out=document.getElementById('bOut'); if(!root||!out) return;
+  var DOES={
+    top3:'каждое утро присылает ТОП-3 задачи на день и порядок, в котором их делать',
+    chaos:'по запросу разбирает мой хаос: я выгружаю всё голосом, он раскладывает по группам и убирает шум',
+    goal:'каждый день сверяет мой план с целью на месяц и честно говорит, если день к ней не ведёт',
+    evening:'вечером спрашивает, что получилось, а что нет, и переносит остальное на завтра без чувства вины',
+    step:'каждый день предлагает один маленький шаг к цели на 15–30 минут, чтобы была маленькая победа',
+    week:'раз в неделю делает обзор: что продвинулось к цели, что буксует и план на следующую неделю',
+    drafts:'вечером я ставлю ему задачи на завтра, а к утру он готовит черновики, с которыми легко начать',
+    rest:'следит, чтобы в дне оставалось время на отдых и на себя, и не даёт перегружать день'
+  };
+  var TONE={care:'бережно и поддерживающе, без давления',biz:'по-деловому: коротко, по пунктам, без лишних слов',coach:'как тренер: честно, с напором, без поблажек',fun:'легко и с юмором, без занудства'};
+  function val(name){var e=root.querySelector('input[name="'+name+'"]:checked');return e?e.value:''}
+  function v(id){return (document.getElementById(id).value||'').trim()}
+  function build(){
+    var does=[].map.call(root.querySelectorAll('[data-group="does"] input:checked'),function(e){return DOES[e.value]});
+    var goal=v('fGoal'), m=v('fMorning'), ev=v('fEvening'), wk=v('fWeek'), where=val('where'), mode=val('mode');
+    var L=[];
+    L.push('Помоги мне собрать личного помощника по фокусу. Он нужен, чтобы разгружать мою голову, держать приоритеты дня и не терять из виду цель на месяц.');
+    L.push('');
+    L.push('Что помощник должен делать:');
+    if(does.length){does.forEach(function(d,k){L.push('– '+d+(k===does.length-1?'.':';'))})} else L.push('– пока не знаю – предложи варианты сам.');
+    L.push('');
+    L.push(goal?('Моя цель на месяц: '+goal+'.'):'Цели на месяц пока нет – начни с того, что поможешь мне её сформулировать.');
+    L.push('Удобное время: утро – '+(m||'уточни у меня')+', вечер – '+(ev||'уточни у меня')+(root.querySelector('[data-group="does"] input[value="week"]:checked')?(', обзор недели – '+(wk||'уточни у меня')):'')+'.');
+    L.push('Тон: '+TONE[val('tone')]+'.');
+    L.push('');
+    if(mode==='ask'){
+      L.push('Как работаем:');
+      L.push('1. Сначала ничего не создавай. Опроси меня – по одному вопросу за раз, коротко, с вариантами ответа, где можно. Узнай: чем я занимаюсь и как выглядит мой обычный день; сколько у меня реально часов и когда больше сил; что всегда стоит в расписании; что я обычно откладываю; в каком виде мне удобен план; что меня раздражает в планировании; чего помощник делать не должен.');
+      L.push('2. Если в моём списке чего-то не хватает или есть вариант лучше – предложи.');
+      L.push('3. Когда вопросов хватит (обычно 7–10), коротко покажи, как будет работать помощник: что он делает утром, днём, вечером и раз в неделю. Дождись моего «да».');
+      L.push('4. После этого напиши готовую инструкцию для помощника одним блоком: кто я, моя цель, правила, в каком виде он присылает план, расписание.');
+    } else {
+      L.push('Как работаем:');
+      L.push('1. Возьми всё, что ты уже знаешь обо мне из наших разговоров и памяти. Если чего-то важного не хватает – задай не больше 3 вопросов.');
+      L.push('2. Коротко покажи, как будет работать помощник: что он делает утром, днём, вечером и раз в неделю.');
+      L.push('3. Напиши готовую инструкцию для помощника одним блоком: кто я, моя цель, правила, в каком виде он присылает план, расписание.');
+    }
+    if(where==='gpt') L.push((mode==='ask'?'5. ':'4. ')+'Помощник будет жить в проекте ChatGPT. В конце предложи тексты запланированных задач (утро'+(ev?', вечер':'')+(root.querySelector('[data-group="does"] input[value="week"]:checked')?', неделя':'')+') с точным временем – я создам их внутри проекта.');
+    if(where==='any') L.push((mode==='ask'?'5. ':'4. ')+'Инструкцию я буду вставлять в начало нового чата. Сделай её короткой – не длиннее страницы – и добавь фразу-запуск для утра и для вечера.');
+    if(where==='ru') L.push((mode==='ask'?'5. ':'4. ')+'Я работаю в российской нейросети – там нет проектов и задач по расписанию. Сделай короткую инструкцию, которую я вставлю в начало чата, и готовые фразы-запуски для утра и вечера, которые я буду отправлять сама.');
+    L.push('');
+    L.push('Правила для помощника, которые обязательно должны войти в инструкцию: сначала вопросы, потом план; не больше 3 главных задач в день; честно говорить, если всё в день не помещается; время на отдых не трогать; то, что я откладываю, ставить как встречу с собой.');
+    out.textContent=L.join('\n');
+  }
+  root.addEventListener('input',build); root.addEventListener('change',build); build();
 })();
 </script>
 </body>
