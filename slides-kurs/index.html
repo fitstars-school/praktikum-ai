@@ -815,6 +815,104 @@ body.clean .deck{width:min(94vw,calc(86vh*16/9))}
 .slide.mid .lay,.slide.s-aurora .lay{justify-content:center}
 .mark{left:6.4cqw!important;bottom:2cqw!important;height:1.9cqw!important}
 .num{right:6.4cqw!important;bottom:2.2cqw!important;font-size:1.3cqw!important}
+
+/* ===== интерактивные слайды: карта и маршруты ===== */
+.slide.ix{padding:3.6cqw 5cqw 4.4cqw!important}
+.ix .num{display:none}
+.ix-head .label{font-size:1.25cqw;margin-bottom:.6cqw}
+.ix-h2{font-family:'Unbounded',sans-serif;font-weight:800;font-size:2.9cqw;line-height:1.1;margin:0;color:#fff}
+.ixctl{position:absolute;right:5cqw;bottom:1.6cqw;display:flex;align-items:center;gap:1cqw;z-index:6}
+.ixctl button{font:700 1.1cqw/1 Manrope,sans-serif;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;
+  border-radius:99cqw;padding:.8cqw 1.5cqw;cursor:pointer}
+.ixctl .ix-next{background:var(--grad);border-color:transparent}
+.ixctl button:disabled{opacity:.35;cursor:default}
+.ix-pos{font:700 1cqw Manrope,sans-serif;color:#CFC3DA;min-width:5cqw;text-align:center}
+.ix .mark{bottom:1.9cqw!important}
+/* карта */
+.mstage{position:absolute;left:5cqw;right:5cqw;top:9.6cqw;bottom:5cqw}
+.mlines{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.ring{fill:none;stroke:rgba(255,143,192,.16);stroke-width:1;vector-effect:non-scaling-stroke;opacity:0;transition:opacity .6s}
+.ring.on{opacity:1}
+.seg{stroke:#FF6FB8;stroke-width:2.5;vector-effect:non-scaling-stroke;opacity:0;transition:opacity .6s ease}
+.seg.on{opacity:.9}
+.mcenter{position:absolute;transform:translate(-50%,-50%);width:10.5cqw;height:10.5cqw;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#FF6FB8,#B23AE0 70%);display:flex;align-items:center;justify-content:center;text-align:center;
+  box-shadow:0 0 0 1.2cqw rgba(230,25,140,.12),0 1.6cqw 4cqw -1cqw rgba(178,58,224,.7);z-index:2}
+.mcenter span{font:800 1.15cqw/1.2 'Unbounded',sans-serif;color:#fff;padding:0 1cqw}
+.zn{position:absolute;transform:translate(-50%,-50%) scale(.6);opacity:0;pointer-events:none;border:0;background:none;padding:0;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:.7cqw;transition:opacity .45s,transform .45s;z-index:3;color:#fff}
+.zn.on{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:auto}
+.zn-c{position:relative;width:6.4cqw;height:6.4cqw;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.08);border:2px solid rgba(255,143,192,.55);box-shadow:0 1cqw 3cqw -1cqw rgba(0,0,0,.7)}
+.zn-i{font-size:2.7cqw;line-height:1}
+.zn-n{position:absolute;top:-.5cqw;right:-.5cqw;width:2cqw;height:2cqw;border-radius:50%;background:var(--grad);font:800 1cqw/2cqw Manrope,sans-serif;text-align:center}
+.zn-t{font:800 1.25cqw/1.2 Manrope,sans-serif;white-space:nowrap;text-shadow:0 .2cqw 1cqw rgba(0,0,0,.6)}
+.zn.cur .zn-c{background:var(--grad);border-color:#fff;animation:znp 1.6s ease-in-out infinite}
+.zn.seen .zn-c{border-color:rgba(255,255,255,.35)}
+@keyframes znp{0%,100%{box-shadow:0 0 0 0 rgba(255,111,184,.55)}50%{box-shadow:0 0 0 1.2cqw rgba(255,111,184,0)}}
+.lvl{position:absolute;transform:translate(-50%,-100%);opacity:0;transition:opacity .5s;pointer-events:none;
+  font:600 1cqw/1.25 Manrope,sans-serif;color:#E6DFEC;text-align:center;white-space:nowrap;background:rgba(20,13,26,.75);
+  border:1px solid rgba(255,143,192,.4);border-radius:1cqw;padding:.6cqw 1cqw;z-index:2}
+.lvl b{display:block;font-family:'Unbounded',sans-serif;font-size:.9cqw;letter-spacing:.06em;text-transform:uppercase;color:var(--pink-2);margin-bottom:.2cqw}
+.imap.m-full .lvl{opacity:1}
+.grp3{position:absolute;left:44%;right:16%;top:16%;bottom:14%;border-radius:3cqw;border:1.5px dashed rgba(255,143,192,.45);background:rgba(230,25,140,.06);opacity:0;transition:opacity .5s;pointer-events:none;z-index:1}
+.imap.m-full .grp3{opacity:1}
+.mhint{position:absolute;left:0;bottom:0;font:600 1.05cqw Manrope,sans-serif;color:#A99BB6;transition:opacity .3s}
+.imap.m-full .mhint{opacity:0}
+.zc{position:absolute;top:0;bottom:0;width:48%;background:rgba(24,16,31,.97);border:1px solid rgba(255,143,192,.35);border-radius:1.6cqw;
+  padding:1.8cqw 2.2cqw;display:none;flex-direction:column;gap:1cqw;z-index:5;box-shadow:0 2cqw 5cqw -2cqw rgba(0,0,0,.8)}
+.zc-right{right:0}.zc-left{left:0}
+.zc.on{display:flex;animation:zcin .35s ease}
+@keyframes zcin{from{opacity:0;transform:translateY(1cqw)}to{opacity:1;transform:none}}
+.zc-x{position:absolute;top:1cqw;right:1.2cqw;border:0;background:none;color:#CFC3DA;font-size:2cqw;cursor:pointer;line-height:1}
+.zc-h{display:flex;gap:1.2cqw;align-items:center;margin-bottom:.3cqw}
+.zc-i{font-size:3cqw;line-height:1}
+.zc-k{display:block;font:800 .9cqw Manrope,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--pink-2)}
+.zc-h b{display:block;font:800 1.9cqw/1.15 'Unbounded',sans-serif;color:#fff}
+.zc-h em{display:block;font:500 1.1cqw/1.3 Manrope,sans-serif;font-style:italic;color:#CFC3DA;margin-top:.2cqw}
+.zc-r{display:grid;grid-template-columns:11cqw 1fr;gap:1cqw;align-items:baseline;border-top:1px solid rgba(255,255,255,.08);padding-top:.8cqw}
+.zc-r>span{font:800 1.02cqw/1.3 Manrope,sans-serif;color:var(--pink-2);text-transform:uppercase;letter-spacing:.04em}
+.zc-r p{margin:0;font:500 1.38cqw/1.36 Manrope,sans-serif;color:#EDE6F2}
+.zc-t{grid-column:2;font:700 1.1cqw Manrope,sans-serif;color:#CFC3DA;margin-top:.3cqw}
+.zc-t s{opacity:.7}.zc-t b{color:#fff;background:var(--grad);padding:.15cqw .6cqw;border-radius:.5cqw}
+.mfin{position:absolute;inset:0;display:none;grid-template-columns:1fr 1.15fr;gap:3cqw;align-items:center;z-index:6;
+  background:rgba(20,13,26,.96);border-radius:1.6cqw;padding:2.4cqw 3cqw}
+.imap.m-fin .mfin{display:grid;animation:zcin .4s ease}
+.mfin h3{font:800 2.5cqw/1.15 'Unbounded',sans-serif;color:#fff;margin:.6cqw 0 1.2cqw}
+.mfin p{font:500 1.35cqw/1.45 Manrope,sans-serif;color:#E6DFEC;margin:0 0 1cqw}
+.mfin .mfin-b{font-weight:800;color:#fff}
+.mfin .label{font-size:1.1cqw}
+.mfin-g{display:grid;grid-template-columns:1fr 1fr;gap:1.2cqw}
+.mf{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:1.2cqw;padding:1.4cqw 1.6cqw}
+.mf b{display:block;font:800 2.2cqw/1 'Unbounded',sans-serif;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.mf span{display:block;font:800 1.3cqw/1.25 Manrope,sans-serif;color:#fff;margin:.5cqw 0 .4cqw}
+.mf em{display:block;font:500 1.05cqw/1.35 Manrope,sans-serif;font-style:normal;color:#CFC3DA}
+/* маршруты */
+.rt-tabs{display:flex;gap:1cqw;margin-top:1.6cqw}
+.rt-tab{font:700 1.15cqw Manrope,sans-serif;color:#E6DFEC;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);
+  border-radius:99cqw;padding:.8cqw 1.6cqw;cursor:pointer;display:flex;gap:.6cqw;align-items:center}
+.rt-tab span{font-size:1.4cqw}
+.rt-tab.on{background:var(--grad);border-color:transparent;color:#fff}
+.rt-body{position:absolute;left:5cqw;right:5cqw;top:15.4cqw;bottom:8.6cqw}
+.rt-p{display:none;height:100%;flex-direction:column;gap:1cqw}
+.rt-p.on{display:flex}
+.rt-from{font:600 1.2cqw Manrope,sans-serif;color:#CFC3DA}
+.rt-lad{flex:1;display:grid;grid-template-columns:repeat(6,1fr);gap:1cqw;align-items:end}
+.rs{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:1.2cqw;padding:1.2cqw 1.2cqw 1.4cqw;
+  display:flex;flex-direction:column;gap:.8cqw;opacity:.12;transform:translateY(1cqw);transition:opacity .4s,transform .4s,background .4s}
+.rs.on{opacity:1;transform:none}
+.rs.cur{background:linear-gradient(160deg,rgba(230,25,140,.3),rgba(178,58,224,.22));border-color:rgba(255,143,192,.6)}
+.rs[data-k="1"]{min-height:44%}.rs[data-k="2"]{min-height:54%}.rs[data-k="3"]{min-height:64%}
+.rs[data-k="4"]{min-height:74%}.rs[data-k="5"]{min-height:86%}.rs[data-k="6"]{min-height:98%}
+.rs-i{font-size:2.2cqw;line-height:1}
+.rs b{display:block;font:800 1.2cqw/1.2 Manrope,sans-serif;color:#fff;margin-bottom:.4cqw}
+.rs p{margin:0;font:500 1.05cqw/1.38 Manrope,sans-serif;color:#E6DFEC}
+.rt-res{font:700 1.3cqw/1.35 Manrope,sans-serif;color:#fff;opacity:0;transition:opacity .4s}
+.rt-p.r-done .rt-res{opacity:1}
+.rt-fin{position:absolute;left:5cqw;bottom:2cqw;font:600 1.2cqw Manrope,sans-serif;color:#CFC3DA;opacity:0;transition:opacity .4s;max-width:55%}
+.rt-fin b{color:#fff}
+.iroute.r-all .rt-fin{opacity:1}
+.ix .mark{display:none}
 </style>
 </head>
 
@@ -834,6 +932,89 @@ body.clean .deck{width:min(94vw,calc(86vh*16/9))}
 
 </section>
 
+<section data-kind="say" data-note="&lt;b&gt;Карта возможностей ИИ&lt;/b&gt;&lt;br&gt;Стрелка вправо – следующее направление, влево – назад. Можно открывать зоны кликом в любом порядке. После шестой зоны – вся карта целиком, потом – переход к структуре курса.&lt;br&gt;&lt;br&gt;&lt;b&gt;Главная идея.&lt;/b&gt; Каждый день вы решаете десятки задач: пишете, собираете информацию, оформляете, планируете, анализируете. Многие можно решать быстрее с нейросетями – но для этого мало написать «сделай мне красиво». Нужно несколько навыков, и тогда ИИ – не игрушка, а рабочий инструмент.&lt;br&gt;&lt;br&gt;&lt;b&gt;1. Разовые задачи.&lt;/b&gt; Вопрос в зал: сколько времени вы тратите, чтобы придумать, написать, переделать? Редакторский профиль – небольшой файл о вашем языке, приёмах, примерах удачных текстов и том, чего вы не любите; работает в разных нейросетях. Мысль: нейросеть экономит время, когда вы перестаёте каждый раз учить её понимать вас с нуля.&lt;br&gt;&lt;br&gt;&lt;b&gt;2. Помощники.&lt;/b&gt; Вопрос: какие действия вы повторяете каждую неделю? Тот же принцип – контент, план дня, меню, КП. На создание помощника тоже нужно время. Мысль: вы превращаете привычную работу в систему, которая работает предсказуемо.&lt;br&gt;&lt;br&gt;&lt;b&gt;3. Информация.&lt;/b&gt; Вопрос: сколько времени уходит не на работу, а на поиск, перенос и сбор информации? Пример: «Вот расшифровки пяти моих выступлений, заметки и контент-план. Найди идеи, которые ещё не использовались, и предложи 10 тем в моём стиле». Корректность данных и расчётов – проверять. Мысль: ИИ извлекает пользу из того, что у вас уже накопилось.&lt;br&gt;&lt;br&gt;&lt;b&gt;4. Визуализация.&lt;/b&gt; Вопрос: сколько ваших хороших идей так и не получили достойного оформления? Сложные презентации и интерактивы всё равно требуют доработки. Мысль: вы больше не ограничены тем, что умеете нарисовать сами.&lt;br&gt;&lt;br&gt;&lt;b&gt;5. Сайты и продукты.&lt;/b&gt; Вопрос: от каких идей вы отказываетесь, потому что нужен технарь? Публикация, интеграции и тесты – отдельная работа. Мысль: между «появилась идея» и «могу показать людям» – всё меньше технических препятствий.&lt;br&gt;&lt;br&gt;&lt;b&gt;6. Агенты.&lt;/b&gt; Вопрос: какие задачи вы откладываете, потому что не знаете, куда нажимать? Агентам нужны доступы; они могут ошибаться – финансы, чувствительные данные, публикации и необратимое остаются под контролем человека. Мысль: следующий этап – передавать ИИ часть реальных действий.&lt;br&gt;&lt;br&gt;&lt;b&gt;Вся карта.&lt;/b&gt; Это не шесть отдельных инструментов, а последовательное расширение возможностей – и ровно логика курса: М1 – разовые задачи в своём стиле → М2 – свои помощники → М3 – документы и информация, визуал и презентации, сайты и продукты → М4 – агенты и своя система.&lt;br&gt;&lt;br&gt;&lt;b&gt;Финал.&lt;/b&gt; Без системы знакомство с ИИ случайно: сегодня пост, завтра картинка, послезавтра ролик «сайт за 5 минут» – а в жизни ничего не меняется. Между «нейросеть может» и «я умею использовать её для своих задач» – большое расстояние. Поэтому курс – последовательное освоение навыков. Всё сразу осваивать не нужно: научитесь замечать задачи, где ИИ поможет, – и рутины станет меньше." class="slide s-dark ix imap" data-ix="map">
+  <div class="ix-head"><span class="label">Карта возможностей ИИ</span><h2 class="ix-h2">От разового запроса <span class="accent">до ИИ-агента</span></h2></div>
+  <div class="mstage">
+    <svg class="mlines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><ellipse class="ring" data-r="1" cx="10" cy="82" rx="24" ry="23"/><ellipse class="ring" data-r="2" cx="10" cy="82" rx="42" ry="40"/><ellipse class="ring" data-r="3" cx="10" cy="82" rx="60" ry="57"/><ellipse class="ring" data-r="4" cx="10" cy="82" rx="78" ry="74"/><line class="seg" data-s="1" x1="10" y1="82" x2="26" y2="70"/><line class="seg" data-s="2" x1="26" y1="70" x2="39" y2="40"/><line class="seg" data-s="3" x1="39" y1="40" x2="52" y2="68"/><line class="seg" data-s="4" x1="52" y1="68" x2="64" y2="34"/><line class="seg" data-s="5" x1="64" y1="34" x2="76" y2="62"/><line class="seg" data-s="6" x1="76" y1="62" x2="88" y2="26"/></svg>
+    <div class="mcenter" style="left:10%;top:82%"><span>Мои привычные задачи</span></div>
+    <button type="button" class="zn" data-z="1" style="left:26%;top:70%"><span class="zn-c"><span class="zn-i">✍️</span><span class="zn-n">1</span></span><span class="zn-t">Разовые задачи</span></button><button type="button" class="zn" data-z="2" style="left:39%;top:40%"><span class="zn-c"><span class="zn-i">🤖</span><span class="zn-n">2</span></span><span class="zn-t">ИИ-помощники</span></button><button type="button" class="zn" data-z="3" style="left:52%;top:68%"><span class="zn-c"><span class="zn-i">📚</span><span class="zn-n">3</span></span><span class="zn-t">Работа с информацией</span></button><button type="button" class="zn" data-z="4" style="left:64%;top:34%"><span class="zn-c"><span class="zn-i">🎨</span><span class="zn-n">4</span></span><span class="zn-t">Визуализация</span></button><button type="button" class="zn" data-z="5" style="left:76%;top:62%"><span class="zn-c"><span class="zn-i">🌐</span><span class="zn-n">5</span></span><span class="zn-t">Сайты и продукты</span></button><button type="button" class="zn" data-z="6" style="left:88%;top:26%"><span class="zn-c"><span class="zn-i">🦾</span><span class="zn-n">6</span></span><span class="zn-t">ИИ-агенты</span></button>
+    <div class="lvl" style="left:22%;top:100%"><b>Модуль 1</b>Разовые задачи в своём стиле</div><div class="lvl" style="left:37%;top:100%"><b>Модуль 2</b>Свои помощники</div><div class="lvl" style="left:64%;top:100%"><b>Модуль 3</b>Документы, визуал, сайты</div><div class="lvl" style="left:88%;top:100%"><b>Модуль 4</b>Агенты и своя система</div><div class="grp3"></div>
+    <div class="mhint">Нажмите на направление или «Следующее»</div>
+    <div class="zc zc-right" data-c="1">
+  <button type="button" class="zc-x" aria-label="Закрыть">×</button>
+  <div class="zc-h"><span class="zc-i">✍️</span><div><span class="zc-k">Зона 1 из 6</span><b>Разовые задачи</b><em>ИИ, который понимает, что вы хотите</em></div></div>
+  <div class="zc-r"><span>Узнаёте себя?</span><p>Написать клиенту нужным тоном, придумать заголовок или пост, подготовиться к сложному разговору</p></div>
+  <div class="zc-r"><span>Как обычно?</span><p>Пустой документ и долгий подбор слов. Или десять раз объясняете нейросети: «слишком сухо, слишком искусственно»</p></div>
+  <div class="zc-r"><span>Как с ИИ?</span><p>Чётко ставите задачу, даёте контекст и примеры – и подключаете свой редакторский профиль: файл о вашем стиле</p></div>
+  <div class="zc-r"><span>Что меняется?</span><p>Меньше черновиков и правок, ваш голос сохраняется</p><div class="zc-t"><s>30–60 мин</s> → <b>10–15 мин</b></div></div>
+  <div class="zc-r"><span>Какой навык нужен?</span><p>Формулировать запрос, задавать контекст и критерии, описать свой стиль</p></div>
+</div><div class="zc zc-right" data-c="2">
+  <button type="button" class="zc-x" aria-label="Закрыть">×</button>
+  <div class="zc-h"><span class="zc-i">🤖</span><div><span class="zc-k">Зона 2 из 6</span><b>ИИ-помощники</b><em>Перестать решать одну задачу заново</em></div></div>
+  <div class="zc-r"><span>Узнаёте себя?</span><p>Объявления для новых объектов, коммерческие предложения, отчёты по правилам, план дня, семейное меню</p></div>
+  <div class="zc-r"><span>Как обычно?</span><p>Каждый раз почти с нуля – и заново объясняете нейросети то же самое</p></div>
+  <div class="zc-r"><span>Как с ИИ?</span><p>Один раз описываете процесс. Помощник риелтора по данным квартиры сам готовит объявление для Авито</p></div>
+  <div class="zc-r"><span>Что меняется?</span><p>Стабильный результат, меньше забытых шагов, готовый регламент для сотрудника</p><div class="zc-t"><s>20–30 мин</s> → <b>3–10 мин</b></div></div>
+  <div class="zc-r"><span>Какой навык нужен?</span><p>Замечать повторяющиеся процессы, описывать шаги, настраивать помощника</p></div>
+</div><div class="zc zc-left" data-c="3">
+  <button type="button" class="zc-x" aria-label="Закрыть">×</button>
+  <div class="zc-h"><span class="zc-i">📚</span><div><span class="zc-k">Зона 3 из 6</span><b>Работа с информацией</b><em>Десятки файлов – в один результат</em></div></div>
+  <div class="zc-r"><span>Узнаёте себя?</span><p>Заметки и расшифровки – в статью, несколько документов – в отчёт, большая таблица продаж</p></div>
+  <div class="zc-r"><span>Как обычно?</span><p>Открываете десятки файлов, копируете, переносите, сравниваете вручную</p></div>
+  <div class="zc-r"><span>Как с ИИ?</span><p>«Вот выгрузка продаж. Покажи самые востребованные продукты и клиентов с повторными покупками»</p></div>
+  <div class="zc-r"><span>Что меняется?</span><p>Меньше ручного переноса, видны связи между файлами. Цифры и выводы – проверяете</p><div class="zc-t"><s>несколько часов</s> → <b>десятки минут</b></div></div>
+  <div class="zc-r"><span>Какой навык нужен?</span><p>Организовать файлы, дать ИИ нужный контекст, проверять источники и расчёты</p></div>
+</div><div class="zc zc-left" data-c="4">
+  <button type="button" class="zc-x" aria-label="Закрыть">×</button>
+  <div class="zc-h"><span class="zc-i">🎨</span><div><span class="zc-k">Зона 4 из 6</span><b>Визуализация</b><em>Идеи можно не только описать, но и показать</em></div></div>
+  <div class="zc-r"><span>Узнаёте себя?</span><p>Презентация к встрече, карточка для соцсетей, схема сложной мысли, обложка, квиз или игра</p></div>
+  <div class="zc-r"><span>Как обычно?</span><p>Шаблоны, подгонка текста, долгие согласования с дизайнером. Или идея так и остаётся без оформления</p></div>
+  <div class="zc-r"><span>Как с ИИ?</span><p>Описываете идею – получаете первый вариант: схему, презентацию, карточку, интерактив. Как эта карта</p></div>
+  <div class="zc-r"><span>Что меняется?</span><p>Быстрее от идеи к визуалу, меньше зависимости от шаблонов и подрядчиков</p><div class="zc-t"><s>1–2 часа</s> → <b>15–40 мин</b></div></div>
+  <div class="zc-r"><span>Какой навык нужен?</span><p>Описать визуальную задачу, задать структуру и стиль, проверить детали</p></div>
+</div><div class="zc zc-left" data-c="5">
+  <button type="button" class="zc-x" aria-label="Закрыть">×</button>
+  <div class="zc-h"><span class="zc-i">🌐</span><div><span class="zc-k">Зона 5 из 6</span><b>Сайты и продукты</b><em>Быстрее воплощать свои идеи</em></div></div>
+  <div class="zc-r"><span>Узнаёте себя?</span><p>Нет сайта для практики, нужна визитка, страница мероприятия, калькулятор или тест для клиентов</p></div>
+  <div class="zc-r"><span>Как обычно?</span><p>Ищете разработчика, разбираетесь в конструкторе – идея откладывается на месяцы</p></div>
+  <div class="zc-r"><span>Как с ИИ?</span><p>Вместе с ИИ продумываете структуру, тексты и дизайн – и собираете работающий прототип</p></div>
+  <div class="zc-r"><span>Что меняется?</span><p>Быстрее проверяете идеи, а подрядчику – уже понятное ТЗ</p><div class="zc-t"><s>несколько дней</s> → <b>несколько часов</b></div></div>
+  <div class="zc-r"><span>Какой навык нужен?</span><p>Описать продукт и структуру, собрать, протестировать и доработать</p></div>
+</div><div class="zc zc-left" data-c="6">
+  <button type="button" class="zc-x" aria-label="Закрыть">×</button>
+  <div class="zc-h"><span class="zc-i">🦾</span><div><span class="zc-k">Зона 6 из 6</span><b>ИИ-агенты</b><em>Не только советует, но и делает</em></div></div>
+  <div class="zc-r"><span>Узнаёте себя?</span><p>Заполнить сложную форму, переименовать сотню файлов, поправить сайт в незнакомом редакторе</p></div>
+  <div class="zc-r"><span>Как обычно?</span><p>Инструкции, видео, технический специалист – часы на простое действие</p></div>
+  <div class="zc-r"><span>Как с ИИ?</span><p>Сайт на Tilda, дизайнер не отвечает. Агент сам разбирается в редакторе, меняет текст и добавляет таймер – вы проверяете перед публикацией</p></div>
+  <div class="zc-r"><span>Что меняется?</span><p>Меньше технических препятствий и зависимости от специалиста. Деньги и необратимое – под вашим контролем</p><div class="zc-t"><s>часы поиска</s> → <b>минуты</b></div></div>
+  <div class="zc-r"><span>Какой навык нужен?</span><p>Поставить задачу, дать доступы и ограничить их, проверять шаги</p></div>
+</div>
+    <div class="mfin">
+  <div class="mfin-l">
+    <span class="label">Почему курс устроен так</span>
+    <h3>Без системы знакомство с ИИ <span class="accent">случайно</span></h3>
+    <p>Сегодня – пост. Завтра – картинка. Послезавтра – ролик «сайт за 5 минут». Возможности впечатляют, а в жизни ничего не меняется.</p>
+    <p class="mfin-b">Поэтому курс – это путь по карте: навык за навыком.</p>
+  </div>
+  <div class="mfin-g">
+    <div class="mf"><b>М1</b><span>База работы с ИИ</span><em>✍️ разовые задачи в своём стиле</em></div>
+    <div class="mf"><b>М2</b><span>Свои помощники</span><em>🤖 повторяющиеся задачи – помощникам</em></div>
+    <div class="mf"><b>М3</b><span>Кейсы применения</span><em>🎨 визуал · 📚 файлы и таблицы · 🌐 сайты</em></div>
+    <div class="mf"><b>М4</b><span>Своя система</span><em>🦾 агенты делают часть действий</em></div>
+  </div>
+</div>
+  </div>
+  <div class="ixctl"><button type="button" class="ix-prev">← Назад</button><span class="ix-pos"></span><button type="button" class="ix-next">Следующее направление →</button></div>
+  <span class="num"></span>
+</section>
+<section data-kind="say" data-note="&lt;b&gt;Три маршрута&lt;/b&gt;&lt;br&gt;Стрелка вправо открывает следующий шаг маршрута; после шестого шага – следующий маршрут. Вкладки сверху – можно переключаться в любой момент.&lt;br&gt;&lt;br&gt;&lt;b&gt;Питание.&lt;/b&gt; Шаг 3: можно добавить чеки из магазинов и таблицу расходов – ИИ посчитает стоимость закупки и сгруппирует продукты по отделам. Шаг 4: в середине недели помощник спрашивает, что приготовили и что осталось; с календарём – события для закупок. Шаг 6: покупку и оплату лучше оставлять на подтверждение человеку.&lt;br&gt;&lt;br&gt;&lt;b&gt;Методолог.&lt;/b&gt; Шаг 2: вместо обычной презентации – интерактивная карта, где участники постепенно открывают материал. Шаг 4: настройка методологических помощников – отдельная услуга экспертам, школам, командам. Шаг 6: например, на GetCourse, если доступна интеграция; изменения сначала проверяются, потом публикуются.&lt;br&gt;&lt;br&gt;&lt;b&gt;Предприниматель.&lt;/b&gt; Шаг 4: правила работы переезжают из голов сотрудников в единую систему – даже когда сотрудник увольняется, стандарты остаются; новых проще вводить в должность. Шаг 5: свои инструменты уменьшают зависимость от подписок, но требуют сопровождения и защиты данных.&lt;br&gt;&lt;br&gt;&lt;b&gt;Общий вывод.&lt;/b&gt; Мы не меняли профессию человека. Он по-прежнему кормит семью, разрабатывает курсы, управляет бизнесом. Меняется не задача, а способ, которым он её решает. Возможности последних шагов зависят от инструментов, подключений и контроля. Не обязательно уметь всё сразу – но легче выбирать, чему учиться, когда понимаешь, что открывает каждый навык. По этому принципу и построено обучение: вокруг задач, а не модных нейросетей." class="slide s-dark ix iroute" data-ix="route">
+  <div class="ix-head"><span class="label">Три маршрута</span><h2 class="ix-h2">Как ИИ постепенно меняет <span class="accent">привычную работу</span></h2></div>
+  <div class="rt-tabs"><button type="button" class="rt-tab" data-r="0"><span>🥗</span>Планирование питания</button><button type="button" class="rt-tab" data-r="1"><span>🎓</span>Методолог и эксперт</button><button type="button" class="rt-tab" data-r="2"><span>💼</span>Предприниматель</button></div>
+  <div class="rt-body"><div class="rt-p" data-r="0"><div class="rt-from">Начало: «Что приготовить на ужин?»</div><div class="rt-lad"><div class="rs" data-k="1"><span class="rs-i">✍️</span><div><b>1. Просто спросить</b><p>«Что приготовить сегодня за 30 минут из курицы и овощей?» – рецепт на вечер</p></div></div><div class="rs" data-k="2"><span class="rs-i">🎨</span><div><b>2. Сделать наглядно</b><p>Меню на неделю – таблицей, карточками для телефона, календарём питания</p></div></div><div class="rs" data-k="3"><span class="rs-i">📚</span><div><b>3. Дать свои данные</b><p>Любимые блюда, бюджет, ограничения, что есть дома – меню и закупка под вашу жизнь</p></div></div><div class="rs" data-k="4"><span class="rs-i">🤖</span><div><b>4. Свой помощник</b><p>По воскресеньям – меню на 7 дней, список закупок и план заготовок</p></div></div><div class="rs" data-k="5"><span class="rs-i">🌐</span><div><b>5. Свой инструмент</b><p>Трекер питания в HTML с галочками. Для ребёнка – игровой, с единорогами</p></div></div><div class="rs" data-k="6"><span class="rs-i">🦾</span><div><b>6. Агент</b><p>Собирает корзину в интернет-магазине. Оплату подтверждаете вы</p></div></div></div><div class="rt-res">→ Начинали с «что приготовить?» – пришли к системе питания, закупок и семейных привычек</div></div><div class="rt-p" data-r="1"><div class="rt-from">Начало: «Как построить урок?»</div><div class="rt-lad"><div class="rs" data-k="1"><span class="rs-i">✍️</span><div><b>1. Отдельные задачи</b><p>Структура курса, результаты обучения, задание, вопросы для проверки</p></div></div><div class="rs" data-k="2"><span class="rs-i">🎨</span><div><b>2. Материалы</b><p>Презентации, рабочие тетради, квизы, интерактивные карты и HTML-тренажёры</p></div></div><div class="rs" data-k="3"><span class="rs-i">📚</span><div><b>3. Много исходников</b><p>Расшифровки, интервью, статьи – в структуру курса, конспекты и задания</p></div></div><div class="rs" data-k="4"><span class="rs-i">🤖</span><div><b>4. ИИ-методолог</b><p>Помощник по вашим стандартам: сначала аудитория и результаты, потом модули. Может стать отдельной услугой</p></div></div><div class="rs" data-k="5"><span class="rs-i">🌐</span><div><b>5. Продукты и продажи</b><p>Лендинг, диагностический тест с персональным результатом, оплата и доступ</p></div></div><div class="rs" data-k="6"><span class="rs-i">🦾</span><div><b>6. Агент</b><p>Поменяли урок – система находит связанные материалы и обновляет их после вашей проверки</p></div></div></div><div class="rt-res">→ От помощи с одним уроком – к системе разработки, оформления, продажи и сопровождения продуктов</div></div><div class="rt-p" data-r="2"><div class="rt-from">Начало: «Помоги ответить клиенту»</div><div class="rt-lad"><div class="rs" data-k="1"><span class="rs-i">✍️</span><div><b>1. Текущие вопросы</b><p>«Клиент считает услугу слишком дорогой – помоги ответить». КП, акция, вакансия</p></div></div><div class="rs" data-k="2"><span class="rs-i">🎨</span><div><b>2. Материалы</b><p>Презентация услуг, рекламные карточки, интерактивная схема клиентского пути</p></div></div><div class="rs" data-k="3"><span class="rs-i">📚</span><div><b>3. Анализ</b><p>Продажи, клиенты, отчёты, расходы: что приносит деньги, где теряются заявки</p></div></div><div class="rs" data-k="4"><span class="rs-i">🤖</span><div><b>4. Помощники</b><p>Маркетинг, продажи, клиентский сервис, финансы – стандарты остаются в компании</p></div></div><div class="rs" data-k="5"><span class="rs-i">🌐</span><div><b>5. Свои инструменты</b><p>Калькулятор стоимости на сайте, своя мини-CRM под вашу специфику</p></div></div><div class="rs" data-k="6"><span class="rs-i">🦾</span><div><b>6. Агенты</b><p>Заявка → расчёт → коммерческое предложение → задача менеджеру. Решения – за человеком</p></div></div></div><div class="rt-res">→ От писем – к анализу бизнеса, стандартам работы, своим инструментам и части операций</div></div></div>
+  <div class="rt-fin">Меняется не задача, а <b>способ, которым вы её решаете</b></div>
+  <div class="ixctl"><button type="button" class="ix-prev">← Назад</button><span class="ix-pos"></span><button type="button" class="ix-next">Следующий шаг →</button></div>
+  <span class="num"></span>
+</section>
 <section data-kind="say" data-note="" class="slide s-fit s-tint">
 <div class="cq"><div class="lay">
   <h2 class="h2-sm">Для кого создан курс <span class="accent nowrap">«Нейро-архитектор»</span></h2>
@@ -1063,7 +1244,7 @@ body.clean .deck{width:min(94vw,calc(86vh*16/9))}
     <div class="tile">
       <div class="t-top"><span class="t-h">Нейро-Старт</span><span class="t-seats">мест без&nbsp;ограничений</span></div>
       <div class="t-price">19&nbsp;900&nbsp;₽</div>
-      <div class="t-dep">с&nbsp;депозитом&nbsp;– 19&nbsp;310&nbsp;₽</div>
+      
       <div class="t-mon">или&nbsp;от <b>1&nbsp;659&nbsp;₽</b> в&nbsp;месяц</div>
       <ul class="t-feat"><li class="yes">3&nbsp;модуля, 12&nbsp;уроков</li><li class="no">4-й модуль: своя система</li><li class="no">2 воркшопа</li><li class="no">чат с&nbsp;куратором</li><li class="no">личные встречи</li><li class="yes">доступ 2 месяца с&nbsp;даты старта</li><li class="no">обновления 2-го потока</li></ul>
       <div class="t-btn">Выбрать →</div>
@@ -1071,7 +1252,7 @@ body.clean .deck{width:min(94vw,calc(86vh*16/9))}
     <div class="tile pick"><span class="t-badge">Выбирают чаще всего</span>
       <div class="t-top"><span class="t-h">Нейро-Система</span><span class="t-seats">только 44 места</span></div>
       <div class="t-price">29&nbsp;900&nbsp;₽</div>
-      <div class="t-dep">с&nbsp;депозитом&nbsp;– 29&nbsp;310&nbsp;₽</div>
+      
       <div class="t-mon">или&nbsp;от <b>2&nbsp;492&nbsp;₽</b> в&nbsp;месяц</div>
       <ul class="t-feat"><li class="yes">4&nbsp;модуля, 18&nbsp;уроков</li><li class="yes">4-й модуль: своя система</li><li class="yes">2 воркшопа</li><li class="yes">чат с&nbsp;куратором</li><li class="no">личные встречи</li><li class="yes">доступ 6 месяцев с&nbsp;даты старта</li><li class="yes">обновления 2-го потока, без&nbsp;чата</li></ul>
       <div class="t-btn">Выбрать →</div>
@@ -1079,7 +1260,7 @@ body.clean .deck{width:min(94vw,calc(86vh*16/9))}
     <div class="tile">
       <div class="t-top"><span class="t-h">Нейро-Масштаб</span><span class="t-seats">только 2 места</span></div>
       <div class="t-price">71&nbsp;900&nbsp;₽</div>
-      <div class="t-dep">с&nbsp;депозитом&nbsp;– 71&nbsp;310&nbsp;₽</div>
+      
       <div class="t-mon">или&nbsp;от <b>5&nbsp;992&nbsp;₽</b> в&nbsp;месяц</div>
       <ul class="t-feat"><li class="yes">4&nbsp;модуля, 18&nbsp;уроков</li><li class="yes">4-й модуль: своя система</li><li class="yes">2 воркшопа</li><li class="yes">чат с&nbsp;куратором</li><li class="yes">2 личные встречи со&nbsp;мной</li><li class="yes">доступ 6 месяцев с&nbsp;даты старта</li><li class="yes">обновления 2-го потока, без&nbsp;чата</li><li class="yes">курс «Блогер с&nbsp;нуля»</li></ul>
       <div class="t-btn">Выбрать →</div>
@@ -1259,7 +1440,7 @@ body.clean .deck{width:min(94vw,calc(86vh*16/9))}
   function fit(){
     [].slice.call(document.querySelectorAll('.slide')).forEach(function(sl){
       var was=sl.classList.contains('on'); sl.classList.add('on');
-      var cq=sl.querySelector('.cq'), lay=sl.querySelector('.lay');
+      var cq=sl.querySelector('.cq'), lay=sl.querySelector('.lay'); if(!cq){ if(!was) sl.classList.remove('on'); return; }
       var cs=getComputedStyle(sl);
       var W=sl.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight);
       var H=sl.clientHeight-parseFloat(cs.paddingTop)-parseFloat(cs.paddingBottom);
@@ -1278,6 +1459,69 @@ body.clean .deck{width:min(94vw,calc(86vh*16/9))}
   window.addEventListener('load',fit);
   window.addEventListener('resize',function(){clearTimeout(window.__ft);window.__ft=setTimeout(fit,120)});
   fit();
+})();
+</script>
+
+<script>
+(function(){
+  function mapCtl(sl){
+    var nodes=[].slice.call(sl.querySelectorAll('.zn')), cards=[].slice.call(sl.querySelectorAll('.zc')),
+        segs=[].slice.call(sl.querySelectorAll('.seg')), rings=[].slice.call(sl.querySelectorAll('.ring')),
+        pos=sl.querySelector('.ix-pos'), nx=sl.querySelector('.ix-next'), pv=sl.querySelector('.ix-prev');
+    var LV=[0,1,2,3,3,3,4], step=0, open=0, MAX=8;
+    function render(){
+      var shown=Math.min(step,6);
+      nodes.forEach(function(n,k){var z=k+1; n.classList.toggle('on',z<=shown); n.classList.toggle('cur',z===open); n.classList.toggle('seen',z<shown&&z!==open)});
+      segs.forEach(function(s,k){s.classList.toggle('on',k+1<=shown)});
+      rings.forEach(function(r,k){r.classList.toggle('on',k+1<=LV[shown])});
+      cards.forEach(function(c,k){c.classList.toggle('on',k+1===open)});
+      sl.classList.toggle('m-full',step>=7); sl.classList.toggle('m-fin',step>=8);
+      pos.textContent= step===0?'старт': step<=6?('зона '+step+' из 6'): step===7?'вся карта':'курс';
+      pv.disabled=step===0;
+      nx.textContent= step<6?'Следующее направление →': step===6?'Вся карта →': step===7?'Как устроен курс →':'Дальше →';
+    }
+    function go(s){step=Math.max(0,Math.min(MAX,s)); open=(step>=1&&step<=6)?step:0; render()}
+    nodes.forEach(function(n){n.addEventListener('click',function(e){e.stopPropagation();var z=+n.getAttribute('data-z'); open=(open===z)?0:z; render()})});
+    cards.forEach(function(c){c.querySelector('.zc-x').addEventListener('click',function(e){e.stopPropagation();open=0;render()})});
+    nx.addEventListener('click',function(e){e.stopPropagation(); if(step<MAX) go(step+1); else window.__step(1)});
+    pv.addEventListener('click',function(e){e.stopPropagation(); go(step-1)});
+    render();
+    return {next:function(){if(step<MAX){go(step+1);return true}return false}, prev:function(){if(step>0){go(step-1);return true}return false}};
+  }
+  function routeCtl(sl){
+    var tabs=[].slice.call(sl.querySelectorAll('.rt-tab')), panes=[].slice.call(sl.querySelectorAll('.rt-p')),
+        pos=sl.querySelector('.ix-pos'), nx=sl.querySelector('.ix-next'), pv=sl.querySelector('.ix-prev');
+    var r=0, k=0, N=panes.length;
+    function render(){
+      tabs.forEach(function(t,i){t.classList.toggle('on',i===r)});
+      panes.forEach(function(p,i){p.classList.toggle('on',i===r);
+        [].slice.call(p.querySelectorAll('.rs')).forEach(function(s,j){s.classList.toggle('on',i===r&&j<k); s.classList.toggle('cur',i===r&&j===k-1)});
+        p.classList.toggle('r-done',i===r&&k>=6)});
+      sl.classList.toggle('r-all',r===N-1&&k>=6);
+      pos.textContent=(r+1)+' / '+N+' · шаг '+k+' из 6';
+      pv.disabled=(r===0&&k===0);
+      nx.textContent= k<6?'Следующий шаг →': r<N-1?'Следующий маршрут →':'Дальше →';
+    }
+    function next(){ if(k<6){k++;render();return true} if(r<N-1){r++;k=0;render();return true} return false }
+    function prev(){ if(k>0){k--;render();return true} if(r>0){r--;k=6;render();return true} return false }
+    tabs.forEach(function(t,i){t.addEventListener('click',function(e){e.stopPropagation();r=i;k=0;render()})});
+    nx.addEventListener('click',function(e){e.stopPropagation(); if(!next()) window.__step(1)});
+    pv.addEventListener('click',function(e){e.stopPropagation(); prev()});
+    render();
+    return {next:next,prev:prev};
+  }
+  var ctl=new Map();
+  [].slice.call(document.querySelectorAll('.slide.ix')).forEach(function(sl){
+    ctl.set(sl, sl.getAttribute('data-ix')==='map'?mapCtl(sl):routeCtl(sl));
+    sl.addEventListener('click',function(e){e.stopPropagation()});
+  });
+  document.addEventListener('keydown',function(e){
+    var sl=document.querySelector('.slide.on.ix'); if(!sl) return; var c=ctl.get(sl); if(!c) return;
+    var f=null;
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown') f=c.next;
+    if(e.key==='ArrowLeft'||e.key==='PageUp') f=c.prev;
+    if(f&&f()){e.preventDefault();e.stopImmediatePropagation()}
+  },true);
 })();
 </script>
 </body>
